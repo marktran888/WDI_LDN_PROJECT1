@@ -5,15 +5,14 @@ let snakeHead;
 let snakeTail;
 const directions = ['N','E','S','W'];
 const direction = directions[Math.floor(Math.random()*directions.length)];
-let startPoint = Math.floor(Math.random() * column * width);
+const startPoint = Math.floor(Math.random() * column * width);
 
 function addToSnakeBody(item){
   return snakeBody.push(item);
 }
 
-function init() {
-
-  //Build grid
+//Build grid
+function buildGrid(){
   let cellNumber = 0;
   const gridElement = document.createElement('div');
   document.body.appendChild(gridElement);
@@ -29,13 +28,27 @@ function init() {
       rowElement.appendChild(cellElement);
       cellElement.classList.add('cell');
       cellElement.classList.add(cellNumber);
+      cellElement.innerHTML = cellNumber; //for debugging
       cellNumber++;
     }
   }
+}
 
+function showSnake(){
+  const allCells = document.querySelectorAll('.cell');
+  for (let i = 0; i < snakeBody.length; i++) {
+    allCells[snakeBody[i]].classList.add('snakeBody');
+  }
+}
 
+function init() {
+
+  buildGrid();
   snakeHead = startPoint;
   addToSnakeBody(snakeHead);
+  showSnake();
+
+
 }
 
 
