@@ -4,7 +4,7 @@ let snakeBody = [];
 let snakeHead;
 let snakeTail;
 const directions = ['N','E','S','W'];
-const direction = directions[Math.floor(Math.random()*directions.length)];
+let direction = directions[Math.floor(Math.random()*directions.length)];
 const startPoint = Math.floor(Math.random() * column * width);
 
 function addToSnakeBody(item){
@@ -45,15 +45,23 @@ function arrowKeys(){
   document.addEventListener('keydown', (e) => {
     switch (e.keyCode) {
       case 37:
+        direction = 'W';
+        goWest();
         console.log('left');
         break;
       case 38:
+        direction = 'N';
+        goNorth();
         console.log('up');
         break;
       case 39:
+        direction = 'E';
+        goEast();
         console.log('right');
         break;
       case 40:
+        direction = 'S';
+        goSouth();
         console.log('down');
         break;
       default:
@@ -61,6 +69,24 @@ function arrowKeys(){
     }
   });
 }
+
+function goNorth(){
+  addToSnakeBody(snakeHead -= width);
+  showSnake();
+}
+function goSouth(){
+  addToSnakeBody(snakeHead += width);
+  showSnake();
+}
+function goEast(){
+  addToSnakeBody(snakeHead+=1);
+  showSnake();
+}
+function goWest(){
+  addToSnakeBody(snakeHead-=1);
+  showSnake();
+}
+
 
 function init() {
 
