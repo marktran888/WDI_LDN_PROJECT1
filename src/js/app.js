@@ -1,5 +1,5 @@
-const column = 10;
-const width = 10;
+const column = 20;
+const width = 20;
 let snakeBody = [];
 let snakeHead;
 let snakeTail;
@@ -41,12 +41,34 @@ function showSnake(){
   }
 }
 
+function arrowKeys(){
+  document.addEventListener('keydown', (e) => {
+    switch (e.keyCode) {
+      case 37:
+        console.log('left');
+        break;
+      case 38:
+        console.log('up');
+        break;
+      case 39:
+        console.log('right');
+        break;
+      case 40:
+        console.log('down');
+        break;
+      default:
+        console.log('invalid button');
+    }
+  });
+}
+
 function init() {
 
   buildGrid();
   snakeHead = startPoint;
   addToSnakeBody(snakeHead);
   showSnake();
+  arrowKeys();
 
 
 }
