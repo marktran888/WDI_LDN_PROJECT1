@@ -10,6 +10,7 @@ const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 const speedOptions = ['normal', 'fast'];
 let speed = speedOptions[1];
+let food;
 
 function addToSnakeBody(item){
   return snakeBody.push(item);
@@ -76,6 +77,7 @@ function arrowKeys(){
 }
 
 function step(){
+  const allCells = document.querySelectorAll('.cell');
   switch (direction){
     case 'N':
       snakeHead = ((snakeHead - width) + (width * height)) % (width * height);
@@ -91,8 +93,14 @@ function step(){
       break;
   }
   addToSnakeBody(snakeHead);
-  if (snakeBody.length > minSnakeSize){
-    snakeBody.splice(0,1);
+  if (snakeHead !== food){
+    if (snakeBody.length > minSnakeSize){
+      snakeBody.splice(0,1);
+    }
+  }
+  if (snakeHead === food){
+    allCells[food].classList.remove('food');
+    placeFood();
   }
   showSnake();
 }
@@ -106,8 +114,8 @@ function move(){
 
 function placeFood(){
   const allCells = document.querySelectorAll('.cell');
-  const rand = Math.floor(Math.random() * width * height);
-  allCells[rand].classList.add('food');
+  food = Math.floor(Math.random() * width * height);
+  allCells[food].classList.add('food');
 }
 
 function init() {
