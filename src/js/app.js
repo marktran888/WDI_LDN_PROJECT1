@@ -107,6 +107,12 @@ function move(){
   }, speed === 'fast' ? 250 : 100);
 }
 
+function placeFood(){
+  const allCells = document.querySelectorAll('.cell');
+  const rand = Math.floor(Math.random() * width * height);
+  allCells[rand].classList.add('food');
+}
+
 function init() {
 
   buildGrid();
@@ -114,6 +120,7 @@ function init() {
   addToSnakeBody(snakeHead);
   showSnake();
   arrowKeys();
+  placeFood();
 
 }
 
