@@ -89,8 +89,12 @@ function step(){
       snakeHead = (snakeHead - snakeHead % width)+(snakeHead + 1) % width;
       break;
     case 'W':
-      snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
-      break;
+      if (snakeHead === 0){
+        snakeHead = width - 1;
+      } else {
+        snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
+        break;
+      }
   }
   if (snakeBody.includes(snakeHead)){
     console.log('CRASH'); //for debugging
