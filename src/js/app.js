@@ -1,13 +1,14 @@
-const height = 20;
-const width = 20;
+const height = 25;
+const width = 25;
 const snakeBody = [];
 let snakeHead;
-let snakeTail;
-const minSnakeSize = 5;
-// const directions = ['N','E','S','W'];
-// let direction = directions[Math.floor(Math.random()*directions.length)];
-let direction;
+const minSnakeSize = 5; //initial min
+const directions = ['N','E','S','W'];
+let direction = directions[Math.floor(Math.random()*directions.length)];
 const startPoint = Math.floor(Math.random() * height * width);
+let timerId;
+const speedOptions = ['normal', 'fast'];
+let speed = speedOptions[0];
 
 function addToSnakeBody(item){
   return snakeBody.push(item);
@@ -51,27 +52,29 @@ function arrowKeys(){
     switch (e.keyCode) {
       case 37:
         direction = 'W';
-        goWest();
+        // goWest();
         console.log('left');
         break;
       case 38:
         direction = 'N';
-        goNorth();
+        // goNorth();
         console.log('up');
         break;
       case 39:
         direction = 'E';
-        goEast();
+        // goEast();
         console.log('right');
         break;
       case 40:
         direction = 'S';
-        goSouth();
+        // goSouth();
         console.log('down');
         break;
       default:
         console.log('invalid button');
     }
+    clearInterval(timerId);
+    move(direction);
   });
 }
 
@@ -107,6 +110,28 @@ function goWest(){
     snakeBody.splice(0,1);
   }
   showSnake();
+}
+
+function move(direction){
+  console.log(direction); //for debugging
+  timerId = setInterval(() => {
+    switch(direction) {
+      case 'N':
+        goNorth();
+        break;
+      case 'E':
+        goEast();
+        break;
+      case 'S':
+        goSouth();
+        break;
+      case 'W':
+        goWest();
+        break;
+      default:
+        console.log('invalid move');
+    }
+  }, speed === 'fast' ? 250 : 100);
 }
 
 
