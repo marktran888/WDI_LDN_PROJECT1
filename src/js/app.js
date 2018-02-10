@@ -9,7 +9,7 @@ let direction;
 const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 const speedOptions = ['normal', 'fast'];
-let speed = speedOptions[0];
+let speed = speedOptions[1];
 
 function addToSnakeBody(item){
   return snakeBody.push(item);
@@ -53,22 +53,18 @@ function arrowKeys(){
     switch (e.keyCode) {
       case 37:
         direction = 'W';
-        // goWest();
         console.log('left');
         break;
       case 38:
         direction = 'N';
-        // goNorth();
         console.log('up');
         break;
       case 39:
         direction = 'E';
-        // goEast();
         console.log('right');
         break;
       case 40:
         direction = 'S';
-        // goSouth();
         console.log('down');
         break;
       default:
@@ -102,9 +98,10 @@ function step(){
 }
 
 function move(){
+  step();
   timerId = setInterval(() => {
     step();
-  }, speed === 'fast' ? 250 : 100);
+  }, speed === 'fast' ? 100 : 250);
 }
 
 function placeFood(){
