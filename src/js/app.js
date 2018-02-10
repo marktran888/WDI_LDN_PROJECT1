@@ -1,6 +1,6 @@
 const height = 25;
 const width = 25;
-const snakeBody = [];
+let snakeBody = [];
 let snakeHead;
 const minSnakeSize = 5; //initial min
 // const directions = ['N','E','S','W'];
@@ -9,7 +9,7 @@ let direction;
 const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 const speedOptions = ['normal', 'fast'];
-let speed = speedOptions[1];
+let speed = speedOptions[0];
 let food;
 
 function addToSnakeBody(item){
@@ -92,6 +92,10 @@ function step(){
       snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
       break;
   }
+  if (snakeBody.includes(snakeHead)){
+    console.log('CRASH'); //for debugging
+    gameOver();
+  }
   addToSnakeBody(snakeHead);
   if (snakeHead !== food){
     if (snakeBody.length > minSnakeSize){
@@ -116,6 +120,16 @@ function placeFood(){
   const allCells = document.querySelectorAll('.cell');
   food = Math.floor(Math.random() * width * height);
   allCells[food].classList.add('food');
+}
+
+function gameOver(){
+  clearInterval(timerId);
+  snakeBody =[];
+  const allCells = document.querySelectorAll('.cell');
+  allCells[food].classList.remove('food');
+  for (var i = 0; i < allCells.length; i++) {
+    allCells[i].classList.remove('snakeBody');
+  }
 }
 
 function init() {
