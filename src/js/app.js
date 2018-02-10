@@ -3,6 +3,7 @@ const width = 20;
 const snakeBody = [];
 let snakeHead;
 let snakeTail;
+const minSnakeSize = 5;
 // const directions = ['N','E','S','W'];
 // let direction = directions[Math.floor(Math.random()*directions.length)];
 let direction;
@@ -29,7 +30,7 @@ function buildGrid(){
       rowElement.appendChild(cellElement);
       cellElement.classList.add('cell');
       cellElement.classList.add(cellNumber);
-      cellElement.innerHTML = cellNumber; //for debugging
+      // cellElement.innerHTML = cellNumber; //for debugging
       cellNumber++;
     }
   }
@@ -76,28 +77,28 @@ function arrowKeys(){
 
 function goNorth(){
   addToSnakeBody(snakeHead -= width);
-  if (snakeBody.length > 5){
+  if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
 }
 function goSouth(){
   addToSnakeBody(snakeHead += width);
-  if (snakeBody.length > 5){
+  if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
 }
 function goEast(){
   addToSnakeBody(snakeHead += 1);
-  if (snakeBody.length > 5){
+  if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
 }
 function goWest(){
   addToSnakeBody(snakeHead -= 1);
-  if (snakeBody.length > 5){
+  if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
