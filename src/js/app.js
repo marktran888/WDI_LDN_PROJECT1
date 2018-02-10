@@ -1,4 +1,4 @@
-const column = 20;
+const height = 20;
 const width = 20;
 const snakeBody = [];
 let snakeHead;
@@ -7,7 +7,7 @@ const minSnakeSize = 5;
 // const directions = ['N','E','S','W'];
 // let direction = directions[Math.floor(Math.random()*directions.length)];
 let direction;
-const startPoint = Math.floor(Math.random() * column * width);
+const startPoint = Math.floor(Math.random() * height * width);
 
 function addToSnakeBody(item){
   return snakeBody.push(item);
@@ -20,7 +20,7 @@ function buildGrid(){
   document.body.appendChild(gridElement);
   gridElement.classList.add('grid');
 
-  for (let i = 0; i < column; i++) {
+  for (let i = 0; i < height; i++) {
     const rowElement = document.createElement('div');
     gridElement.appendChild(rowElement);
     rowElement.classList.add('row');
@@ -76,28 +76,33 @@ function arrowKeys(){
 }
 
 function goNorth(){
-  addToSnakeBody(snakeHead -= width);
+  snakeHead = ((snakeHead - width) + (width * height)) % (width * height);
+  addToSnakeBody(snakeHead);
   if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
 }
 function goSouth(){
-  addToSnakeBody(snakeHead += width);
+  snakeHead = ((snakeHead + width) + (width * height)) % (width * height);
+  addToSnakeBody(snakeHead);
   if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
 }
+
 function goEast(){
-  addToSnakeBody(snakeHead += 1);
+  snakeHead = (snakeHead - snakeHead % width)+(snakeHead + 1) % width;
+  addToSnakeBody(snakeHead);
   if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
   showSnake();
 }
 function goWest(){
-  addToSnakeBody(snakeHead -= 1);
+  snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
+  addToSnakeBody(snakeHead);
   if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
   }
