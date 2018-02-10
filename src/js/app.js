@@ -3,8 +3,9 @@ const width = 25;
 const snakeBody = [];
 let snakeHead;
 const minSnakeSize = 5; //initial min
-const directions = ['N','E','S','W'];
-let direction = directions[Math.floor(Math.random()*directions.length)];
+// const directions = ['N','E','S','W'];
+// let direction = directions[Math.floor(Math.random()*directions.length)];
+let direction;
 const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 const speedOptions = ['normal', 'fast'];
@@ -78,33 +79,21 @@ function arrowKeys(){
   });
 }
 
-function goNorth(){
-  snakeHead = ((snakeHead - width) + (width * height)) % (width * height);
-  addToSnakeBody(snakeHead);
-  if (snakeBody.length > minSnakeSize){
-    snakeBody.splice(0,1);
+function step(){
+  switch (direction){
+    case 'N':
+      snakeHead = ((snakeHead - width) + (width * height)) % (width * height);
+      break;
+    case 'S':
+      snakeHead = ((snakeHead + width) + (width * height)) % (width * height);
+      break;
+    case 'E':
+      snakeHead = (snakeHead - snakeHead % width)+(snakeHead + 1) % width;
+      break;
+    case 'W':
+      snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
+      break;
   }
-  showSnake();
-}
-function goSouth(){
-  snakeHead = ((snakeHead + width) + (width * height)) % (width * height);
-  addToSnakeBody(snakeHead);
-  if (snakeBody.length > minSnakeSize){
-    snakeBody.splice(0,1);
-  }
-  showSnake();
-}
-
-function goEast(){
-  snakeHead = (snakeHead - snakeHead % width)+(snakeHead + 1) % width;
-  addToSnakeBody(snakeHead);
-  if (snakeBody.length > minSnakeSize){
-    snakeBody.splice(0,1);
-  }
-  showSnake();
-}
-function goWest(){
-  snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
   addToSnakeBody(snakeHead);
   if (snakeBody.length > minSnakeSize){
     snakeBody.splice(0,1);
@@ -112,28 +101,11 @@ function goWest(){
   showSnake();
 }
 
-function move(direction){
-  console.log(direction); //for debugging
+function move(){
   timerId = setInterval(() => {
-    switch(direction) {
-      case 'N':
-        goNorth();
-        break;
-      case 'E':
-        goEast();
-        break;
-      case 'S':
-        goSouth();
-        break;
-      case 'W':
-        goWest();
-        break;
-      default:
-        console.log('invalid move');
-    }
+    step();
   }, speed === 'fast' ? 250 : 100);
 }
-
 
 function init() {
 
@@ -143,8 +115,6 @@ function init() {
   showSnake();
   arrowKeys();
 
-
 }
-
 
 window.addEventListener('DOMContentLoaded', init);
