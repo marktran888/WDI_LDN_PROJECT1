@@ -9,12 +9,9 @@ let direction;
 const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 const speedOptions = ['normal', 'fast'];
-let speed = speedOptions[0];
+const speed = speedOptions[0];
 let food;
-
-function addToSnakeBody(item){
-  return snakeBody.push(item);
-}
+let running = true;
 
 //Build grid
 function buildGrid(){
@@ -37,6 +34,10 @@ function buildGrid(){
       cellNumber++;
     }
   }
+}
+
+function addToSnakeBody(item){
+  return snakeBody.push(item);
 }
 
 function showSnake(){
@@ -76,6 +77,15 @@ function arrowKeys(){
   });
 }
 
+function move(){
+  step();
+  if (running === true){
+    timerId = setInterval(() => {
+      step();
+    }, speed === 'fast' ? 100 : 250);
+  }
+}
+
 function step(){
   const allCells = document.querySelectorAll('.cell');
   switch (direction){
@@ -113,30 +123,29 @@ function step(){
   showSnake();
 }
 
-function move(){
-  step();
-  timerId = setInterval(() => {
-    step();
-  }, speed === 'fast' ? 100 : 250);
-}
 
 function placeFood(){
   const allCells = document.querySelectorAll('.cell');
   food = Math.floor(Math.random() * width * height);
   allCells[food].classList.add('food');
 }
-
 function gameOver(){
   clearInterval(timerId);
+  console.log(timerId); //for debugging
   snakeBody =[];
   const allCells = document.querySelectorAll('.cell');
   allCells[food].classList.remove('food');
   for (var i = 0; i < allCells.length; i++) {
     allCells[i].classList.remove('snakeBody');
   }
+  running = false;
+  return running;
 }
 
 function init() {
+  //show welcome message
+  //display leaderboard
+  //select speed
 
   buildGrid();
   snakeHead = startPoint;
