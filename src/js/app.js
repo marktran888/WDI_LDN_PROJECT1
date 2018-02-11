@@ -126,36 +126,41 @@ function step(){
   showSnake();
 }
 
-
 function placeFood(){
   const allCells = document.querySelectorAll('.cell');
   food = Math.floor(Math.random() * width * height);
   allCells[food].classList.add('food');
 }
+
 function gameOver(){
   clearInterval(timerId);
   console.log(timerId); //for debugging
-  snakeBody =[];
   const allCells = document.querySelectorAll('.cell');
   allCells[food].classList.remove('food');
-  for (var i = 0; i < allCells.length; i++) {
-    allCells[i].classList.remove('snakeBody');
-  }
+  snakeBody=[];
+  showSnake();
   running = false;
+  const gridElement = document.querySelector('.grid');
+  const gameContainer = document.querySelector('.game-container');
+  gameContainer.removeChild(gridElement);
+  gameContainer.innerHTML = '<img src="/images/snake.png" alt="snake-icon">';
   return running;
 }
 
-function init() {
-  //show welcome message
-  //display leaderboard
-  //select speed
-
+function startGame(){
   buildGrid();
   snakeHead = startPoint;
   addToSnakeBody(snakeHead);
   showSnake();
   arrowKeys();
   placeFood();
+}
+
+function init() {
+  //show welcome message
+  //display leaderboard
+  //select speed
+  startGame();
 
 }
 

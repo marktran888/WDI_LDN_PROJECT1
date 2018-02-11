@@ -1,3 +1,5 @@
+@import "reset";
+
 * {
   box-sizing: border-box;
 }
@@ -33,13 +35,26 @@ body {
 }
 
 h1, h2 {
-  color: white;
+  color: black;
   font-size: 50px;
   font-family: 'Permanent Marker', cursive;
-  background-color: black;
+  background-color: white;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+.snake-icon {
+  color: white;
+  height: 300px;
 }
 
 footer {
-  margin: 20px;
-  float: right;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.license {
+  font-size: 10px;
 }
