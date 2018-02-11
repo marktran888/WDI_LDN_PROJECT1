@@ -12,7 +12,7 @@ const speedOptions = ['normal', 'fast'];
 const speed = speedOptions[0];
 let food;
 let running = true;
-
+const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
 
 
 //Build grid
@@ -121,6 +121,7 @@ function step(){
   }
   if (snakeHead === food){
     allCells[food].classList.remove('food');
+    allCells[food].innerHTML = '';
     placeFood();
   }
   showSnake();
@@ -130,6 +131,8 @@ function placeFood(){
   const allCells = document.querySelectorAll('.cell');
   food = Math.floor(Math.random() * width * height);
   allCells[food].classList.add('food');
+  const foodIcon = foodIcons[Math.floor(Math.random()*foodIcons.length)];
+  allCells[food].innerHTML = `<img class="food-icon" src="/images/${foodIcon}.png" alt="pear-icon">`;
 }
 
 function gameOver(){
