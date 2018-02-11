@@ -30,10 +30,6 @@ body {
   background-color: red;
 }
 
-// .food {
-//   background-color: green;
-// }
-
 h1, h2 {
   color: black;
   font-size: 50px;
@@ -62,4 +58,10 @@ footer {
 .food-icon {
   height: 18px;
   width: 18px;
+}
+
+.score {
+  color: black;
+  font-size: 50px;
+  font-family: 'Permanent Marker', cursive;
 }

@@ -132,7 +132,7 @@ function placeFood(){
   food = Math.floor(Math.random() * width * height);
   allCells[food].classList.add('food');
   const foodIcon = foodIcons[Math.floor(Math.random()*foodIcons.length)];
-  allCells[food].innerHTML = `<img class="food-icon" src="/images/${foodIcon}.png" alt="pear-icon">`;
+  allCells[food].innerHTML = `<img class="food-icon" src="/images/${foodIcon}.png" alt="${foodIcon}-icon">`;
 }
 
 function gameOver(){
@@ -140,13 +140,15 @@ function gameOver(){
   console.log(timerId); //for debugging
   const allCells = document.querySelectorAll('.cell');
   allCells[food].classList.remove('food');
+  const score = snakeBody.length - minSnakeSize;
   snakeBody=[];
   showSnake();
   running = false;
   const gridElement = document.querySelector('.grid');
   const gameContainer = document.querySelector('.game-container');
   gameContainer.removeChild(gridElement);
-  gameContainer.innerHTML = '<img src="/images/snake.png" alt="snake-icon">';
+  gameContainer.innerHTML = `<img src="/images/snake.png" alt="snake-icon">\
+  <p class="score">YOUR SCORE IS ${score}<p>`;
   return running;
 }
 
