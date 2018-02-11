@@ -140,7 +140,7 @@ function gameOver(){
   console.log(timerId); //for debugging
   const allCells = document.querySelectorAll('.cell');
   allCells[food].classList.remove('food');
-  const score = snakeBody.length - minSnakeSize;
+  const score = Math.max(0, snakeBody.length - minSnakeSize);
   snakeBody=[];
   showSnake();
   running = false;
