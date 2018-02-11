@@ -82,8 +82,10 @@ function arrowKeys(){
       default:
         console.log('invalid button');
     }
-    clearInterval(timerId);
-    move(direction);
+    if (running === true){
+      clearInterval(timerId);
+      move(direction);
+    }
   });
 }
 
@@ -119,24 +121,25 @@ function step(){
   if (snakeBody.includes(snakeHead)){
     console.log('CRASH'); //for debugging
     gameOver();
-  }
-  addToSnakeBody(snakeHead);
-  if (snakeHead !== food){
-    if (snakeBody.length > minSnakeSize){
-      snakeBody.splice(0,1);
+  } else {
+    addToSnakeBody(snakeHead);
+    if (snakeHead !== food){
+      if (snakeBody.length > minSnakeSize){
+        snakeBody.splice(0,1);
+      }
     }
+    if (snakeHead === food){
+      const audio = document.querySelector('audio');
+      const message = document.querySelector('h2');
+      audioChoose();
+      audio.play();
+      message.innerHTML = sound;
+      allCells[food].classList.remove('food');
+      allCells[food].innerHTML = '';
+      placeFood();
+    }
+    showSnake();
   }
-  if (snakeHead === food){
-    const audio = document.querySelector('audio');
-    const message = document.querySelector('h2');
-    audioChoose();
-    audio.play();
-    message.innerHTML = sound;
-    allCells[food].classList.remove('food');
-    allCells[food].innerHTML = '';
-    placeFood();
-  }
-  showSnake();
 }
 
 function placeFood(){
