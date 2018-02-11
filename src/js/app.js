@@ -12,8 +12,15 @@ const speedOptions = ['normal', 'fast'];
 const speed = speedOptions[0];
 let food;
 let running = true;
+let sound;
 const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
+const audioFiles = ['after', 'faster', 'makes_us', 'over', 'better', 'harder', 'more_than', 'stronger', 'do_it', 'hour', 'never', 'work_is', 'ever', 'make_it', 'our', 'work_it'];
 
+function audioChoose (){
+  const audio = document.querySelector('audio');
+  sound = audioFiles[Math.floor(Math.random()*audioFiles.length)];
+  return audio.setAttribute('src',`/sounds/${sound}.wav`);
+}
 
 //Build grid
 function buildGrid(){
@@ -120,6 +127,11 @@ function step(){
     }
   }
   if (snakeHead === food){
+    const audio = document.querySelector('audio');
+    const message = document.querySelector('h2');
+    audioChoose();
+    audio.play();
+    message.innerHTML = sound;
     allCells[food].classList.remove('food');
     allCells[food].innerHTML = '';
     placeFood();
