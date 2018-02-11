@@ -11,19 +11,35 @@ body {
   display: inline-block;
   padding: 1px;
 }
+
 .row {
   margin: 0;
   height: 20px;
 }
+
 .cell {
   border: 1px solid #ddd;
   width: 20px;
   height: 20px;
   display: inline-block;
 }
-.snakeBody{
+
+.snakeBody {
   background-color: red;
 }
-.food{
+
+.food {
   background-color: green;
+}
+
+h1, h2 {
+  color: white;
+  font-size: 50px;
+  font-family: 'Permanent Marker', cursive;
+  background-color: black;
+}
+
+footer {
+  margin: 20px;
+  float: right;
 }

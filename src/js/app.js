@@ -13,11 +13,14 @@ const speed = speedOptions[0];
 let food;
 let running = true;
 
+
+
 //Build grid
 function buildGrid(){
   let cellNumber = 0;
   const gridElement = document.createElement('div');
-  document.body.appendChild(gridElement);
+  const gameContainer = document.querySelector('.game-container');
+  gameContainer.appendChild(gridElement);
   gridElement.classList.add('grid');
 
   for (let i = 0; i < height; i++) {
