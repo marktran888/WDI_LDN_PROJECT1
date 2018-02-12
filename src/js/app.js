@@ -19,6 +19,7 @@ const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s bett
 const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', 'green', 'red', 'magenta'];
 let audioIndex;
 let score;
+let start = true;
 
 function audioChoose (){
   const audio = document.querySelector('audio');
@@ -89,6 +90,11 @@ function arrowKeyFunction(e){
       break;
     default:
       console.log('invalid button');
+  }
+  if (start){
+    const message = document.querySelector('h2');
+    message.innerHTML = 'Score: 0';
+    start = false;
   }
   if (running === true){
     console.log('stopping timerId: '+timerId);
@@ -195,6 +201,8 @@ function reset(){
   const snakeIconElement = document.querySelector('.snake-icon');
   snakeIconElement.addEventListener('click', () => {
     gameContainer.innerHTML = '';
+    const message = document.querySelector('h2');
+    message.innerHTML = 'Score: 0';
     score = 0;
     snakeBody = [];
     running = true;
