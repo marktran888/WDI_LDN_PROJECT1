@@ -15,11 +15,14 @@ let running = true;
 let sound;
 const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
 const audioFiles = ['after', 'faster', 'makes_us', 'over', 'better', 'harder', 'more_than', 'stronger', 'do_it', 'hour', 'never', 'work_is', 'ever', 'make_it', 'our', 'work_it'];
+const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s better', 'go hard or go home', 'go go go!', 'stronger', 'do it!', 'yeah!', 'nice work!', 'good!', 'excellent', 'OK!', 'you can do better!', 'work it!'];
+let audioIndex;
 let score;
 
 function audioChoose (){
   const audio = document.querySelector('audio');
-  sound = audioFiles[Math.floor(Math.random()*audioFiles.length)];
+  audioIndex = Math.floor(Math.random()*audioFiles.length);
+  sound = audioFiles[audioIndex];
   return audio.setAttribute('src',`/sounds/${sound}.wav`);
 }
 
@@ -135,7 +138,7 @@ function step(){
       audioChoose();
       audio.play();
       score = Math.max(0, snakeBody.length - minSnakeSize);
-      message.innerHTML = `<p>Score: ${score}</p><p>${sound}</p>`;
+      message.innerHTML = `<p>Score: ${score}</p><p>${commentary[audioIndex]}</p>`;
       allCells[food].classList.remove('food');
       allCells[food].innerHTML = '';
       placeFood();
@@ -157,15 +160,14 @@ function gameOver(){
   console.log(timerId); //for debugging
   const allCells = document.querySelectorAll('.cell');
   allCells[food].classList.remove('food');
-  score = Math.max(0, snakeBody.length - minSnakeSize);
+  // score = Math.max(0, snakeBody.length - minSnakeSize);
   snakeBody=[];
   showSnake();
   running = false;
   const gridElement = document.querySelector('.grid');
   const gameContainer = document.querySelector('.game-container');
   gameContainer.removeChild(gridElement);
-  gameContainer.innerHTML = `<img src="/images/snake.png" alt="snake-icon">\
-  <p class="score">YOUR SCORE IS ${score}<p>`;
+  gameContainer.innerHTML = '<img src="/images/snake.png" alt="snake-icon">';
   return running;
 }
 
