@@ -1,3 +1,6 @@
+let gridElement;
+let gameContainer;
+
 const height = 25;
 const width = 25;
 let snakeBody = [];
@@ -6,15 +9,13 @@ const minSnakeSize = 5; //initial min
 let direction;
 const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
-const speedOptions = ['normal', 'fast'];
-// const speed = speedOptions[0];
 let speed = 350; //starting speed
 let food;
 let running = true;
 let sound;
 const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
 const audioFiles = ['after', 'faster', 'makes_us', 'over', 'better', 'harder', 'more_than', 'stronger', 'do_it', 'hour', 'never', 'work_is', 'ever', 'make_it', 'our', 'work_it'];
-const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s better', 'go hard or go home', 'go go go!', 'stronger', 'do it!', 'yeah!', 'nice work!', 'good!', 'excellent', 'OK!', 'you can do better!', 'work it!'];
+const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s better', 'go hard or go home', 'go go go!', 'ya mon!', 'do it!', 'yeah!', 'nice work!', 'good!', 'excellent', 'OK!', 'you can do better!', 'winter is coming!'];
 const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', 'green', 'red', 'magenta'];
 let audioIndex;
 let score;
@@ -29,8 +30,8 @@ function audioChoose (){
 //Build grid
 function buildGrid(){
   let cellNumber = 0;
-  const gridElement = document.createElement('div');
-  const gameContainer = document.querySelector('.game-container');
+  gridElement = document.createElement('div');
+  gameContainer = document.querySelector('.game-container');
   gameContainer.appendChild(gridElement);
   gridElement.classList.add('grid');
 
@@ -65,32 +66,35 @@ function showSnake(){
 }
 
 function arrowKeys(){
-  document.addEventListener('keydown', (e) => {
-    switch (e.keyCode) {
-      case 37:
-        direction = 'W';
-        console.log('left');
-        break;
-      case 38:
-        direction = 'N';
-        console.log('up');
-        break;
-      case 39:
-        direction = 'E';
-        console.log('right');
-        break;
-      case 40:
-        direction = 'S';
-        console.log('down');
-        break;
-      default:
-        console.log('invalid button');
-    }
-    if (running === true){
-      clearInterval(timerId);
-      move(direction);
-    }
-  });
+  document.addEventListener('keydown', arrowKeyFunction);
+}
+
+function arrowKeyFunction(e){
+  switch (e.keyCode) {
+    case 37:
+      direction = 'W';
+      console.log('left');
+      break;
+    case 38:
+      direction = 'N';
+      console.log('up');
+      break;
+    case 39:
+      direction = 'E';
+      console.log('right');
+      break;
+    case 40:
+      direction = 'S';
+      console.log('down');
+      break;
+    default:
+      console.log('invalid button');
+  }
+  if (running === true){
+    console.log('stopping timerId: '+timerId);
+    clearInterval(timerId);
+    move(direction);
+  }
 }
 
 function move(){
@@ -108,6 +112,7 @@ function move(){
   }
   if (running === true){
     timerId = setInterval(() => {
+      console.log('timerId: '+timerId);
       step();
       console.log('speed' +speed);
     }, speed);
@@ -178,11 +183,23 @@ function gameOver(){
   snakeBody=[];
   showSnake();
   running = false;
-  const gridElement = document.querySelector('.grid');
-  const gameContainer = document.querySelector('.game-container');
   gameContainer.removeChild(gridElement);
-  gameContainer.innerHTML = '<img src="/images/snake.png" alt="snake-icon">';
-  return running;
+  gameContainer.innerHTML = '<img class="snake-icon" src="/images/snake.png" alt="snake-icon">';
+  const message = document.querySelector('h2');
+  message.innerHTML = 'click on snake to start again';
+  document.removeEventListener('keydown', arrowKeyFunction);
+  reset();
+}
+
+function reset(){
+  const snakeIconElement = document.querySelector('.snake-icon');
+  snakeIconElement.addEventListener('click', () => {
+    gameContainer.innerHTML = '';
+    score = 0;
+    snakeBody = [];
+    running = true;
+    startGame();
+  });
 }
 
 function startGame(){
@@ -195,6 +212,8 @@ function startGame(){
 }
 
 function init() {
+  gridElement = document.querySelector('.grid');
+  gameContainer = document.querySelector('.game-container');
   //show welcome message
   //display leaderboard
   //select speed
