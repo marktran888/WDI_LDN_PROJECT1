@@ -1,38 +1,45 @@
+//DOM selectors
 let gridElement;
 let gameContainer;
-
+let audio;
+let allCells;
+//grid size
 const height = 25;
 const width = 25;
+
+//snake
+const minSnakeSize = 5; //initial min
+const startPoint = Math.floor(Math.random() * height * width);
 let snakeBody = [];
 let snakeHead;
-const minSnakeSize = 5; //initial min
 let direction;
-const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 let speed = 350; //starting speed
+
+//food
 let food;
-let running = true;
-let sound;
 const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
+
+// sounds
 const audioFiles = ['after', 'faster', 'makes_us', 'over', 'better', 'harder', 'more_than', 'stronger', 'do_it', 'hour', 'never', 'work_is', 'ever', 'make_it', 'our', 'work_it'];
+
+//commentary
 const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s better', 'go hard or go home', 'go go go!', 'ya mon!', 'do it!', 'yeah!', 'nice work!', 'good!', 'excellent', 'OK!', 'you can do better!', 'winter is coming!'];
 const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', 'green', 'red', 'magenta'];
-let audioIndex;
+
+//initialize
 let score;
-let start = true;
+let start = true; // for welcome message
+let running = true;
 
 function audioChoose (){
-  const audio = document.querySelector('audio');
-  audioIndex = Math.floor(Math.random()*audioFiles.length);
-  sound = audioFiles[audioIndex];
-  return audio.setAttribute('src',`/sounds/${sound}.wav`);
+  return audio.setAttribute('src',`/sounds/${audioFiles[Math.floor(Math.random()*audioFiles.length)]}.wav`);
 }
 
 //Build grid
 function buildGrid(){
   let cellNumber = 0;
   gridElement = document.createElement('div');
-  gameContainer = document.querySelector('.game-container');
   gameContainer.appendChild(gridElement);
   gridElement.classList.add('grid');
 
@@ -57,7 +64,6 @@ function addToSnakeBody(item){
 }
 
 function showSnake(){
-  const allCells = document.querySelectorAll('.cell');
   for (var i = 0; i < allCells.length; i++) {
     allCells[i].classList.remove('snakeBody');
   }
@@ -97,7 +103,6 @@ function arrowKeyFunction(e){
     start = false;
   }
   if (running === true){
-    console.log('stopping timerId: '+timerId);
     clearInterval(timerId);
     move(direction);
   }
@@ -118,9 +123,7 @@ function move(){
   }
   if (running === true){
     timerId = setInterval(() => {
-      console.log('timerId: '+timerId);
       step();
-      console.log('speed' +speed);
     }, speed);
   }
 }
@@ -161,7 +164,7 @@ function step(){
       audioChoose();
       audio.play();
       score = Math.max(0, snakeBody.length - minSnakeSize);
-      message.innerHTML = `<p>Score: ${score}</p><p class="commentary">${commentary[audioIndex]}</p>`;
+      message.innerHTML = `<p>Score: ${score}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
       const commentaryElement = document.querySelector('.commentary');
       commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
       allCells[food].classList.remove('food');
@@ -212,6 +215,7 @@ function reset(){
 
 function startGame(){
   buildGrid();
+  allCells = document.querySelectorAll('.cell');
   snakeHead = startPoint;
   addToSnakeBody(snakeHead);
   showSnake();
@@ -222,8 +226,9 @@ function startGame(){
 function init() {
   gridElement = document.querySelector('.grid');
   gameContainer = document.querySelector('.game-container');
-  //show welcome message
-  //display leaderboard
+  audio = document.querySelector('audio');
+  gameContainer = document.querySelector('.game-container');
+
   //select speed
   startGame();
 
