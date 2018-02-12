@@ -151,7 +151,8 @@ function step(){
   }
   if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead)){
     console.log('CRASH'); //for debugging
-    gameOver();
+    randomColors(1);
+    // gameOver();
   } else {
     addToSnakeBody(snakeHead);
     if (snakeHead !== food){
@@ -178,7 +179,6 @@ function step(){
 }
 
 function placeFood(){
-  // const allCells = document.querySelectorAll('.cell');
   food = Math.floor(Math.random() * width * height);
   while (blocks.includes(food)){
     food = Math.floor(Math.random() * width * height);
@@ -200,16 +200,26 @@ function placeBlocks(){
   }
 }
 
+function randomColors(seconds){
+  let x = 0;
+  const colorTimer = setInterval(() => {
+    for (let i = 0; i < allCells.length; i++) {
+      allCells[i].setAttribute('style', `background-color: ${colors[Math.floor(Math.random() * colors.length)]};`);
+    }
+    x++;
+    if (x === seconds*10){
+      clearInterval(colorTimer);
+      gameOver();
+    }
+  }, 100);
+}
+
 function gameOver(){
   clearInterval(timerId);
-  console.log(timerId); //for debugging
-  const allCells = document.querySelectorAll('.cell');
   allCells[food].classList.remove('food');
-  // score = Math.max(0, snakeBody.length - minSnakeSize);
   snakeBody=[];
   showSnake();
   running = false;
-  gameContainer.removeChild(gridElement);
   gameContainer.innerHTML = '<img class="snake-icon" src="/images/snake.png" alt="snake-icon">';
   const message = document.querySelector('h2');
   message.innerHTML = 'click on snake to start again';
@@ -245,11 +255,8 @@ function init() {
   gridElement = document.querySelector('.grid');
   gameContainer = document.querySelector('.game-container');
   audio = document.querySelector('audio');
-  gameContainer = document.querySelector('.game-container');
 
-  //select speed
   startGame();
-
 }
 
 window.addEventListener('DOMContentLoaded', init);
