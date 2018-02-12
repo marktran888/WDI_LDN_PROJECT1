@@ -3,19 +3,19 @@ const width = 25;
 let snakeBody = [];
 let snakeHead;
 const minSnakeSize = 5; //initial min
-// const directions = ['N','E','S','W'];
-// let direction = directions[Math.floor(Math.random()*directions.length)];
 let direction;
 const startPoint = Math.floor(Math.random() * height * width);
 let timerId;
 const speedOptions = ['normal', 'fast'];
-const speed = speedOptions[0];
+// const speed = speedOptions[0];
+let speed = 350; //starting speed
 let food;
 let running = true;
 let sound;
 const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
 const audioFiles = ['after', 'faster', 'makes_us', 'over', 'better', 'harder', 'more_than', 'stronger', 'do_it', 'hour', 'never', 'work_is', 'ever', 'make_it', 'our', 'work_it'];
 const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s better', 'go hard or go home', 'go go go!', 'stronger', 'do it!', 'yeah!', 'nice work!', 'good!', 'excellent', 'OK!', 'you can do better!', 'work it!'];
+const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', 'green', 'red', 'magenta'];
 let audioIndex;
 let score;
 
@@ -95,10 +95,22 @@ function arrowKeys(){
 
 function move(){
   step();
+  if (score === 0 && score < 5){
+    speed = 300;
+  } else if (score >= 5 && score < 10){
+    speed = 250;
+  } else if (score >= 10 && score < 30){
+    speed = 200;
+  } else if (score >= 30 && score < 50){
+    speed = 150;
+  } else if (score >= 50){
+    speed = 100;
+  }
   if (running === true){
     timerId = setInterval(() => {
       step();
-    }, speed === 'fast' ? 100 : 250);
+      console.log('speed' +speed);
+    }, speed);
   }
 }
 
@@ -138,7 +150,9 @@ function step(){
       audioChoose();
       audio.play();
       score = Math.max(0, snakeBody.length - minSnakeSize);
-      message.innerHTML = `<p>Score: ${score}</p><p>${commentary[audioIndex]}</p>`;
+      message.innerHTML = `<p>Score: ${score}</p><p class="commentary">${commentary[audioIndex]}</p>`;
+      const commentaryElement = document.querySelector('.commentary');
+      commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
       allCells[food].classList.remove('food');
       allCells[food].innerHTML = '';
       placeFood();
