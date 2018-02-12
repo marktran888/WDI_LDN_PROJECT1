@@ -31,6 +31,7 @@ const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', '
 let score;
 let start = true; // for welcome message
 let running = true;
+let blocks = [];
 
 function audioChoose (){
   return audio.setAttribute('src',`/sounds/${audioFiles[Math.floor(Math.random()*audioFiles.length)]}.wav`);
@@ -114,11 +115,11 @@ function move(){
     speed = 300;
   } else if (score >= 5 && score < 10){
     speed = 250;
-  } else if (score >= 10 && score < 30){
+  } else if (score >= 10 && score < 20){
     speed = 200;
-  } else if (score >= 30 && score < 50){
+  } else if (score >= 20 && score < 30){
     speed = 150;
-  } else if (score >= 50){
+  } else if (score >= 30){
     speed = 100;
   }
   if (running === true){
@@ -148,7 +149,7 @@ function step(){
         break;
       }
   }
-  if (snakeBody.includes(snakeHead)){
+  if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead)){
     console.log('CRASH'); //for debugging
     gameOver();
   } else {
@@ -170,17 +171,33 @@ function step(){
       allCells[food].classList.remove('food');
       allCells[food].innerHTML = '';
       placeFood();
+      if (score >= 2) placeBlocks();
     }
     showSnake();
   }
 }
 
 function placeFood(){
-  const allCells = document.querySelectorAll('.cell');
+  // const allCells = document.querySelectorAll('.cell');
   food = Math.floor(Math.random() * width * height);
+  while (blocks.includes(food)){
+    food = Math.floor(Math.random() * width * height);
+  }
   allCells[food].classList.add('food');
   const foodIcon = foodIcons[Math.floor(Math.random()*foodIcons.length)];
   allCells[food].innerHTML = `<img class="food-icon" src="/images/${foodIcon}.png" alt="${foodIcon}-icon">`;
+}
+
+function placeBlocks(){
+  //make sure rand isnt already taken
+  let tryBlock = Math.floor(Math.random() * width * height);
+  while (tryBlock === food){
+    tryBlock = Math.floor(Math.random() * width * height);
+  }
+  blocks.push(tryBlock);
+  for (let i = 0; i < blocks.length; i++) {
+    allCells[blocks[i]].classList.add('block');
+  }
 }
 
 function gameOver(){
@@ -208,6 +225,7 @@ function reset(){
     message.innerHTML = 'Score: 0';
     score = 0;
     snakeBody = [];
+    blocks = [];
     running = true;
     startGame();
   });
