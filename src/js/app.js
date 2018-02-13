@@ -48,18 +48,18 @@ function audioChoose (){
 }
 
 //Build grid
-function buildGrid(){
+function buildGrid(h,w){
   let cellNumber = 0;
   gridElement = document.createElement('div');
   gameContainer.appendChild(gridElement);
   gridElement.classList.add('grid');
 
-  for (let i = 0; i < height; i++) {
+  for (let i = 0; i < h; i++) {
     const rowElement = document.createElement('div');
     gridElement.appendChild(rowElement);
     rowElement.classList.add('row');
 
-    for (let j = 0; j < width; j++) {
+    for (let j = 0; j < w; j++) {
       const cellElement = document.createElement('div');
       rowElement.appendChild(cellElement);
       cellElement.classList.add('cell');
@@ -407,7 +407,7 @@ function reset(){
 }
 
 function startGame(){
-  buildGrid();
+  buildGrid(height, width);
   //find all cells after Grid is built
   allCells = document.querySelectorAll('.cell');
   snakeHead = startPoint;
