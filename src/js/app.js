@@ -3,6 +3,7 @@ let gridElement;
 let gameContainer;
 let audio;
 let allCells;
+
 //grid size
 const height = 25;
 const width = 25;
@@ -10,9 +11,8 @@ const width = 25;
 //snake
 const minSnakeSize = 5; //initial min
 const startPoint = Math.floor(Math.random() * height * width);
-console.log(startPoint);
-const startPoint2 = (startPoint + 2 + 2 * width)% (height * width);
-console.log(startPoint2);
+//separates players at start
+const startPoint2 = (startPoint + 2 + 2 * width) % (height * width);
 let snakeBody = [];
 let snakeBody2 = [];
 let snakeHead;
@@ -23,7 +23,6 @@ let timerId;
 let timerId2;
 let speed = 350; //starting speed
 let speed2 = 350; //starting speed
-let winner;
 
 //food
 let food;
@@ -39,6 +38,7 @@ const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', '
 //initialize
 let score = 0;
 let score2 = 0;
+let winner;
 let start = true; // for welcome message
 let running = true;
 let blocks = [];
