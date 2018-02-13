@@ -363,13 +363,14 @@ function placeFood(){
 function placeBlocks(){
   //make sure rand isnt already taken
   let tryBlock = Math.floor(Math.random() * width * height);
-  while (tryBlock === food){
+  while (tryBlock === food || tryBlock === snakeHead || tryBlock === snakeHead2){
     tryBlock = Math.floor(Math.random() * width * height);
   }
   blocks.push(tryBlock);
-  for (let i = 0; i < blocks.length; i++) {
-    allCells[blocks[i]].classList.add('block');
-  }
+  // for (let i = 0; i < blocks.length; i++) {
+  //   allCells[blocks[i]].classList.add('block');
+  // }
+  allCells[tryBlock].classList.add('block');
 }
 
 function randomColors(seconds){
@@ -390,8 +391,8 @@ function gameOver(){
   clearInterval(timerId);
   clearInterval(timerId2);
   allCells[food].classList.remove('food');
-  snakeBody=[];
-  snakeBody2=[];
+  // snakeBody=[];
+  // snakeBody2=[];
   // showSnake();
   running = false;
   gameContainer.innerHTML = '<img class="snake-icon" src="/images/snake.png" alt="snake-icon">';
@@ -413,6 +414,7 @@ function reset(){
     message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     score = 0;
     snakeBody = [];
+    snakeBody2 = [];
     blocks = [];
     running = true;
     startGame();
