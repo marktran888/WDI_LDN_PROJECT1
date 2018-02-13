@@ -10,11 +10,20 @@ const width = 25;
 //snake
 const minSnakeSize = 5; //initial min
 const startPoint = Math.floor(Math.random() * height * width);
+console.log(startPoint);
+const startPoint2 = (startPoint + 2 + 2 * width)% (height * width);
+console.log(startPoint2);
 let snakeBody = [];
+let snakeBody2 = [];
 let snakeHead;
+let snakeHead2;
 let direction;
+let direction2;
 let timerId;
+let timerId2;
 let speed = 350; //starting speed
+let speed2 = 350; //starting speed
+let winner;
 
 //food
 let food;
@@ -28,7 +37,8 @@ const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s bett
 const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', 'green', 'red', 'magenta'];
 
 //initialize
-let score;
+let score = 0;
+let score2 = 0;
 let start = true; // for welcome message
 let running = true;
 let blocks = [];
@@ -64,6 +74,10 @@ function addToSnakeBody(item){
   return snakeBody.push(item);
 }
 
+function addToSnakeBody2(item){
+  return snakeBody2.push(item);
+}
+
 function showSnake(){
   for (var i = 0; i < allCells.length; i++) {
     allCells[i].classList.remove('snakeBody');
@@ -72,40 +86,111 @@ function showSnake(){
     allCells[snakeBody[i]].classList.add('snakeBody');
   }
 }
+function showSnake2(){
+  for (var i = 0; i < allCells.length; i++) {
+    allCells[i].classList.remove('snakeBody2');
+  }
+  for (let i = 0; i < snakeBody2.length; i++) {
+    allCells[snakeBody2[i]].classList.add('snakeBody2');
+  }
+}
 
 function arrowKeys(){
   document.addEventListener('keydown', arrowKeyFunction);
 }
+// function arrowKeys2(){
+//   document.addEventListener('keydown', arrowKeyFunction2);
+// }
 
 function arrowKeyFunction(e){
   switch (e.keyCode) {
     case 37:
-      direction = 'W';
-      console.log('left');
+      if (direction !== 'E'){
+        direction = 'W';
+        console.log('left');
+        if (running === true){
+          clearInterval(timerId);
+          move(direction);
+        }
+      }
       break;
     case 38:
-      direction = 'N';
-      console.log('up');
+      if (direction !== 'S'){
+        direction = 'N';
+        console.log('up');
+        if (running === true){
+          clearInterval(timerId);
+          move(direction);
+        }
+      }
       break;
     case 39:
-      direction = 'E';
-      console.log('right');
+      if (direction !== 'W'){
+        direction = 'E';
+        console.log('right');
+        if (running === true){
+          clearInterval(timerId);
+          move(direction);
+        }
+      }
       break;
     case 40:
-      direction = 'S';
-      console.log('down');
+      if (direction !== 'N'){
+        direction = 'S';
+        console.log('down');
+        if (running === true){
+          clearInterval(timerId);
+          move(direction);
+        }
+      }
+      break;
+    case 65:
+      if (direction2 !== 'E'){
+        direction2 = 'W';
+        console.log('left');
+        if (running === true){
+          clearInterval(timerId2);
+          move2(direction2);
+        }
+      }
+      break;
+    case 87:
+      if (direction2 !== 'S'){
+        direction2 = 'N';
+        console.log('up');
+        if (running === true){
+          clearInterval(timerId2);
+          move2(direction2);
+        }
+      }
+      break;
+    case 68:
+      if (direction2 !== 'W'){
+        direction2 = 'E';
+        console.log('right');
+        if (running === true){
+          clearInterval(timerId2);
+          move2(direction2);
+        }
+      }
+      break;
+    case 83:
+      if (direction2 !== 'N'){
+        direction2 = 'S';
+        console.log('down');
+        if (running === true){
+          clearInterval(timerId2);
+          move2(direction2);
+        }
+      }
       break;
     default:
       console.log('invalid button');
   }
   if (start){
     const message = document.querySelector('h2');
-    message.innerHTML = 'Score: 0';
+    message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     start = false;
-  }
-  if (running === true){
-    clearInterval(timerId);
-    move(direction);
   }
 }
 
@@ -126,6 +211,25 @@ function move(){
     timerId = setInterval(() => {
       step();
     }, speed);
+  }
+}
+function move2(){
+  step2();
+  if (score2 === 0 && score2 < 5){
+    speed2 = 300;
+  } else if (score2 >= 5 && score2 < 10){
+    speed2 = 250;
+  } else if (score2 >= 10 && score2 < 20){
+    speed2 = 200;
+  } else if (score2 >= 20 && score2 < 30){
+    speed2 = 150;
+  } else if (score2 >= 30){
+    speed2 = 100;
+  }
+  if (running === true){
+    timerId2 = setInterval(() => {
+      step2();
+    }, speed2);
   }
 }
 
@@ -149,8 +253,18 @@ function step(){
         break;
       }
   }
-  if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead)){
+  if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead) || snakeBody2.includes(snakeHead)){
     console.log('CRASH'); //for debugging
+    /////////////
+    if (snakeBody.includes(snakeHead)){
+      console.log('player1 crash into self');
+    } else if (blocks.includes(snakeHead)){
+      console.log('player1 crash into block');
+    } else if (snakeBody2.includes(snakeHead)){
+      console.log('player1 crash into player2');
+    }
+    /////////////
+    winner = 'Player2';
     randomColors(1);
     // gameOver();
   } else {
@@ -166,7 +280,7 @@ function step(){
       audioChoose();
       audio.play();
       score = Math.max(0, snakeBody.length - minSnakeSize);
-      message.innerHTML = `<p>Score: ${score}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
+      message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
       const commentaryElement = document.querySelector('.commentary');
       commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
       allCells[food].classList.remove('food');
@@ -175,6 +289,64 @@ function step(){
       if (score >= 2) placeBlocks();
     }
     showSnake();
+  }
+}
+function step2(){
+  const allCells = document.querySelectorAll('.cell');
+  switch (direction2){
+    case 'N':
+      snakeHead2 = ((snakeHead2 - width) + (width * height)) % (width * height);
+      break;
+    case 'S':
+      snakeHead2 = ((snakeHead2 + width) + (width * height)) % (width * height);
+      break;
+    case 'E':
+      snakeHead2 = (snakeHead2 - snakeHead2 % width)+(snakeHead2 + 1) % width;
+      break;
+    case 'W':
+      if (snakeHead2 === 0){
+        snakeHead2 = width - 1;
+      } else {
+        snakeHead2 = (snakeHead2 - snakeHead2 % width)+(snakeHead2 - 1) % width;
+        break;
+      }
+  }
+  if (snakeBody2.includes(snakeHead2) || blocks.includes(snakeHead2) || snakeBody.includes(snakeHead2)){
+    console.log('CRASH'); //for debugging
+    /////////////////////
+    if (snakeBody2.includes(snakeHead2)){
+      console.log('player2 crash into self');
+    } else if (blocks.includes(snakeHead2)){
+      console.log('player2 crash into block');
+    } else if (snakeBody.includes(snakeHead2)){
+      console.log('player2 crash into player1');
+    }
+    /////////////
+    winner = 'Player1';
+    randomColors(1);
+    // gameOver();
+  } else {
+    addToSnakeBody2(snakeHead2);
+    if (snakeHead2 !== food){
+      if (snakeBody2.length > minSnakeSize){
+        snakeBody2.splice(0,1);
+      }
+    }
+    if (snakeHead2 === food){
+      const audio = document.querySelector('audio');
+      const message = document.querySelector('h2');
+      audioChoose();
+      audio.play();
+      score2 = Math.max(0, snakeBody2.length - minSnakeSize);
+      message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
+      const commentaryElement = document.querySelector('.commentary');
+      commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
+      allCells[food].classList.remove('food');
+      allCells[food].innerHTML = '';
+      placeFood();
+      if (score2 >= 2) placeBlocks();
+    }
+    showSnake2();
   }
 }
 
@@ -201,53 +373,63 @@ function placeBlocks(){
 }
 
 function randomColors(seconds){
-  let x = 0;
-  const colorTimer = setInterval(() => {
-    for (let i = 0; i < allCells.length; i++) {
-      allCells[i].setAttribute('style', `background-color: ${colors[Math.floor(Math.random() * colors.length)]};`);
-    }
-    x++;
-    if (x === seconds*10){
-      clearInterval(colorTimer);
+  // let x = 0;
+  // const colorTimer = setInterval(() => {
+  //   for (let i = 0; i < allCells.length; i++) {
+  //     allCells[i].setAttribute('style', `background-color: ${colors[Math.floor(Math.random() * colors.length)]};`);
+  //   }
+  //   x++;
+  //   if (x === seconds*10){
+  //     clearInterval(colorTimer);
       gameOver();
-    }
-  }, 100);
+  //   }
+  // }, 100);
 }
 
 function gameOver(){
   clearInterval(timerId);
+  clearInterval(timerId2);
   allCells[food].classList.remove('food');
   snakeBody=[];
-  showSnake();
+  snakeBody2=[];
+  // showSnake();
   running = false;
   gameContainer.innerHTML = '<img class="snake-icon" src="/images/snake.png" alt="snake-icon">';
   const message = document.querySelector('h2');
-  message.innerHTML = 'click on snake to start again';
+  if (winner === 'Player1'){
+    message.innerHTML = '<p>click on snake to start again<p><p class="red">Player1 WINS</p>';
+  } else {
+    message.innerHTML = '<p>click on snake to start again<p><p class="blue">Player2 WINS</p>';
+  }
   document.removeEventListener('keydown', arrowKeyFunction);
   reset();
 }
 
 function reset(){
-  const snakeIconElement = document.querySelector('.snake-icon');
-  snakeIconElement.addEventListener('click', () => {
-    gameContainer.innerHTML = '';
-    const message = document.querySelector('h2');
-    message.innerHTML = 'Score: 0';
-    score = 0;
-    snakeBody = [];
-    blocks = [];
-    running = true;
-    startGame();
-  });
+  // const snakeIconElement = document.querySelector('.snake-icon');
+  // snakeIconElement.addEventListener('click', () => {
+  //   gameContainer.innerHTML = '';
+  //   const message = document.querySelector('h2');
+  //   message.innerHTML = 'Score: 0';
+  //   score = 0;
+  //   snakeBody = [];
+  //   blocks = [];
+  //   running = true;
+  //   startGame();
+  // });
 }
 
 function startGame(){
   buildGrid();
   allCells = document.querySelectorAll('.cell');
   snakeHead = startPoint;
+  snakeHead2 = startPoint2;
   addToSnakeBody(snakeHead);
+  addToSnakeBody2(snakeHead2);
   showSnake();
+  showSnake2();
   arrowKeys();
+  // arrowKeys2();
   placeFood();
 }
 
