@@ -410,7 +410,7 @@ function reset(){
   snakeIconElement.addEventListener('click', () => {
     gameContainer.innerHTML = '';
     const message = document.querySelector('h2');
-    message.innerHTML = 'Score: 0';
+    message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     score = 0;
     snakeBody = [];
     blocks = [];
