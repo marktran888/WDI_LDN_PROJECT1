@@ -6,7 +6,7 @@ let allCells;
 
 //grid size
 const height = 25;
-const width = 25;
+const width = 45;
 
 //snake
 const minSnakeSize = 5; //initial min
@@ -70,37 +70,22 @@ function buildGrid(){
   }
 }
 
-function addToSnakeBody(item){
+function addToSnakeBody(item, snakeBody){
   return snakeBody.push(item);
 }
 
-function addToSnakeBody2(item){
-  return snakeBody2.push(item);
-}
-
-function showSnake(){
-  for (var i = 0; i < allCells.length; i++) {
-    allCells[i].classList.remove('snakeBody');
+function showSnake(snakeBodyClass, snakeBody){
+  for (let i = 0; i < allCells.length; i++) {
+    allCells[i].classList.remove(snakeBodyClass);
   }
   for (let i = 0; i < snakeBody.length; i++) {
-    allCells[snakeBody[i]].classList.add('snakeBody');
-  }
-}
-function showSnake2(){
-  for (var i = 0; i < allCells.length; i++) {
-    allCells[i].classList.remove('snakeBody2');
-  }
-  for (let i = 0; i < snakeBody2.length; i++) {
-    allCells[snakeBody2[i]].classList.add('snakeBody2');
+    allCells[snakeBody[i]].classList.add(snakeBodyClass);
   }
 }
 
 function arrowKeys(){
   document.addEventListener('keydown', arrowKeyFunction);
 }
-// function arrowKeys2(){
-//   document.addEventListener('keydown', arrowKeyFunction2);
-// }
 
 function arrowKeyFunction(e){
   switch (e.keyCode) {
@@ -268,7 +253,7 @@ function step(){
     randomColors(1);
     // gameOver();
   } else {
-    addToSnakeBody(snakeHead);
+    addToSnakeBody(snakeHead, snakeBody);
     if (snakeHead !== food){
       if (snakeBody.length > minSnakeSize){
         snakeBody.splice(0,1);
@@ -286,9 +271,9 @@ function step(){
       allCells[food].classList.remove('food');
       allCells[food].innerHTML = '';
       placeFood();
-      if (score >= 2) placeBlocks();
+      if (score >= 5) placeBlocks();
     }
-    showSnake();
+    showSnake('snakeBody', snakeBody);
   }
 }
 function step2(){
@@ -326,7 +311,7 @@ function step2(){
     randomColors(1);
     // gameOver();
   } else {
-    addToSnakeBody2(snakeHead2);
+    addToSnakeBody(snakeHead2, snakeBody2);
     if (snakeHead2 !== food){
       if (snakeBody2.length > minSnakeSize){
         snakeBody2.splice(0,1);
@@ -344,9 +329,9 @@ function step2(){
       allCells[food].classList.remove('food');
       allCells[food].innerHTML = '';
       placeFood();
-      if (score2 >= 2) placeBlocks();
+      if (score2 >= 5) placeBlocks();
     }
-    showSnake2();
+    showSnake('snakeBody2', snakeBody2);
   }
 }
 
@@ -423,13 +408,14 @@ function reset(){
 
 function startGame(){
   buildGrid();
+  //find all cells after Grid is built
   allCells = document.querySelectorAll('.cell');
   snakeHead = startPoint;
   snakeHead2 = startPoint2;
-  addToSnakeBody(snakeHead);
-  addToSnakeBody2(snakeHead2);
-  showSnake();
-  showSnake2();
+  addToSnakeBody(snakeHead, snakeBody);
+  addToSnakeBody(snakeHead2, snakeBody2);
+  showSnake('snakeBody', snakeBody);
+  showSnake('snakeBody2', snakeBody2);
   arrowKeys();
   // arrowKeys2();
   placeFood();
