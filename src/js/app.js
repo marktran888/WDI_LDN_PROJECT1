@@ -355,7 +355,8 @@ function placeBlocks(){
   // for (let i = 0; i < blocks.length; i++) {
   //   allCells[blocks[i]].classList.add('block');
   // }
-  allCells[tryBlock].classList.add('block');
+  // allCells[tryBlock].classList.add('block');
+  allCells[tryBlock].innerHTML = '<img class="bomb-icon" src="/images/rock.png" alt="rock">';
 }
 
 function randomColors(seconds){
