@@ -373,17 +373,17 @@ function placeBlocks(){
 }
 
 function randomColors(seconds){
-  // let x = 0;
-  // const colorTimer = setInterval(() => {
-  //   for (let i = 0; i < allCells.length; i++) {
-  //     allCells[i].setAttribute('style', `background-color: ${colors[Math.floor(Math.random() * colors.length)]};`);
-  //   }
-  //   x++;
-  //   if (x === seconds*10){
-  //     clearInterval(colorTimer);
+  let x = 0;
+  const colorTimer = setInterval(() => {
+    for (let i = 0; i < allCells.length; i++) {
+      allCells[i].setAttribute('style', `background-color: ${colors[Math.floor(Math.random() * colors.length)]};`);
+    }
+    x++;
+    if (x === seconds*10){
+      clearInterval(colorTimer);
       gameOver();
-  //   }
-  // }, 100);
+    }
+  }, 100);
 }
 
 function gameOver(){
@@ -406,17 +406,17 @@ function gameOver(){
 }
 
 function reset(){
-  // const snakeIconElement = document.querySelector('.snake-icon');
-  // snakeIconElement.addEventListener('click', () => {
-  //   gameContainer.innerHTML = '';
-  //   const message = document.querySelector('h2');
-  //   message.innerHTML = 'Score: 0';
-  //   score = 0;
-  //   snakeBody = [];
-  //   blocks = [];
-  //   running = true;
-  //   startGame();
-  // });
+  const snakeIconElement = document.querySelector('.snake-icon');
+  snakeIconElement.addEventListener('click', () => {
+    gameContainer.innerHTML = '';
+    const message = document.querySelector('h2');
+    message.innerHTML = 'Score: 0';
+    score = 0;
+    snakeBody = [];
+    blocks = [];
+    running = true;
+    startGame();
+  });
 }
 
 function startGame(){
