@@ -357,16 +357,12 @@ function placeFood(){
 function placeBlocks(){
   //make sure rand isnt already taken
   const chanceBlock = Math.random();
-  if (chanceBlock > blockLevel/100){
+  if (chanceBlock < blockLevel/100){
     let tryBlock = Math.floor(Math.random() * width * height);
     while (tryBlock === food || tryBlock === snakeHead || tryBlock === snakeHead2){
       tryBlock = Math.floor(Math.random() * width * height);
     }
     blocks.push(tryBlock);
-    // for (let i = 0; i < blocks.length; i++) {
-    //   allCells[blocks[i]].classList.add('block');
-    // }
-    // allCells[tryBlock].classList.add('block');
     allCells[tryBlock].innerHTML = '<img class="bomb-icon" src="/images/rock.png" alt="rock">';
   }
 }
@@ -389,9 +385,6 @@ function gameOver(){
   clearInterval(timerId);
   clearInterval(timerId2);
   allCells[food].classList.remove('food');
-  // snakeBody=[];
-  // snakeBody2=[];
-  // showSnake();
   running = false;
   gameContainer.innerHTML = '<img class="snake-icon" src="/images/snake.png" alt="snake-icon">';
   const message = document.querySelector('h2');
@@ -430,7 +423,6 @@ function startGame(){
   showSnake('snakeBody', snakeBody);
   showSnake('snakeBody2', snakeBody2);
   arrowKeys();
-  // arrowKeys2();
   placeFood();
 }
 
@@ -438,7 +430,6 @@ function init() {
   gridElement = document.querySelector('.grid');
   gameContainer = document.querySelector('.game-container');
   audio = document.querySelector('audio');
-
   startGame();
 }
 
