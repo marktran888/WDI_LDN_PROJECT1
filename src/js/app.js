@@ -265,6 +265,10 @@ function step(){
       audioChoose();
       audio.play();
       score = Math.max(0, snakeBody.length - minSnakeSize);
+      if (score > 49){
+        winner = 'Player1';
+        randomColors(1);
+      }
       message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
       const commentaryElement = document.querySelector('.commentary');
       commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
@@ -323,6 +327,10 @@ function step2(){
       audioChoose();
       audio.play();
       score2 = Math.max(0, snakeBody2.length - minSnakeSize);
+      if (score2 > 49){
+        winner = 'Player2';
+        randomColors(1);
+      }
       message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
       const commentaryElement = document.querySelector('.commentary');
       commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
