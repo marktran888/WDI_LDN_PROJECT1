@@ -23,6 +23,7 @@ let timerId;
 let timerId2;
 let speed = 350; //starting speed
 let speed2 = 350; //starting speed
+const blockLevel = 30;
 
 //food
 let food;
@@ -356,7 +357,7 @@ function placeFood(){
 function placeBlocks(){
   //make sure rand isnt already taken
   const chanceBlock = Math.random();
-  if (chanceBlock > 0.5){
+  if (chanceBlock > blockLevel/100){
     let tryBlock = Math.floor(Math.random() * width * height);
     while (tryBlock === food || tryBlock === snakeHead || tryBlock === snakeHead2){
       tryBlock = Math.floor(Math.random() * width * height);
