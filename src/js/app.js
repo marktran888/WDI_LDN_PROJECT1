@@ -91,7 +91,7 @@ function arrowKeys(){
 function arrowKeyFunction(e){
   switch (e.keyCode) {
     case 65:
-      if (direction !== 'E'){
+      if (direction !== 'E' && direction !== 'W'){
         direction = 'W';
         console.log('left');
         if (running === true){
@@ -101,7 +101,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 87:
-      if (direction !== 'S'){
+      if (direction !== 'S' && direction !== 'N'){
         direction = 'N';
         console.log('up');
         if (running === true){
@@ -111,7 +111,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 68:
-      if (direction !== 'W'){
+      if (direction !== 'W' && direction !== 'E'){
         direction = 'E';
         console.log('right');
         if (running === true){
@@ -121,7 +121,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 83:
-      if (direction !== 'N'){
+      if (direction !== 'N' && direction !== 'S'){
         direction = 'S';
         console.log('down');
         if (running === true){
@@ -131,7 +131,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 37:
-      if (direction2 !== 'E'){
+      if (direction2 !== 'E' && direction2 !== 'W'){
         direction2 = 'W';
         console.log('left');
         if (running === true){
@@ -141,7 +141,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 38:
-      if (direction2 !== 'S'){
+      if (direction2 !== 'S' && direction2 !== 'N'){
         direction2 = 'N';
         console.log('up');
         if (running === true){
@@ -151,7 +151,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 39:
-      if (direction2 !== 'W'){
+      if (direction2 !== 'W' && direction2 !== 'E'){
         direction2 = 'E';
         console.log('right');
         if (running === true){
@@ -161,7 +161,7 @@ function arrowKeyFunction(e){
       }
       break;
     case 40:
-      if (direction2 !== 'N'){
+      if (direction2 !== 'N' && direction2 !== 'S'){
         direction2 = 'S';
         console.log('down');
         if (running === true){
@@ -187,15 +187,13 @@ function displayZeroScore(s){
 
 function checkSpeed(score){
   if (score < 5){
-    return 350;
-  } else if (score >= 5 && score < 10){
-    return 300;
-  } else if (score >= 10 && score < 20){
     return 250;
-  } else if (score >= 20 && score < 30){
+  } else if (score >= 5 && score < 20){
     return 200;
-  } else if (score >= 30){
+  } else if (score >= 20 && score < 40){
     return 150;
+  } else if (score >= 40){
+    return 100;
   }
 }
 
