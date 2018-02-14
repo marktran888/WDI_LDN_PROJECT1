@@ -22,6 +22,7 @@ let direction2;
 let timerId;
 let timerId2;
 const blockLevel = 30; //% chance a block appears
+const winScore = 50;
 
 //food
 let food;
@@ -71,6 +72,11 @@ function buildGrid(h,w){
 
 function addToSnakeBody(item, snakeBody){
   return snakeBody.push(item);
+}
+function loseTail(snakeBody){
+  if (snakeBody.length > minSnakeSize){
+    return snakeBody.splice(0,1);
+  }
 }
 
 //clears all snakeBodyClass and reapplies
@@ -232,42 +238,64 @@ function newSnakeHead(direction, snakeHead){
   }
 }
 
-//checks for if it is valid
-function step(){
-  snakeHead = newSnakeHead(direction, snakeHead);
+function hasCrashed(snakeBody, snakeHead, snakeBody2, player, otherPlayer){
   if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead) || snakeBody2.includes(snakeHead)){
     console.log('CRASH'); //for debugging
     if (snakeBody.includes(snakeHead)){
-      console.log('player1 crash into self');
+      console.log(`${player} crash into self`);
     } else if (blocks.includes(snakeHead)){
-      console.log('player1 crash into block');
+      console.log(`${player} crash into block`);
     } else if (snakeBody2.includes(snakeHead)){
-      console.log('player1 crash into player2');
+      console.log(`${player} crash into ${otherPlayer}`);
     }
+    return true;
+  }
+  return false;
+}
+
+function playRandomSound(){
+  const audio = document.querySelector('audio');
+  audioChoose();
+  audio.play();
+}
+
+function findScore(snakeBody){
+  return Math.max(0, snakeBody.length - minSnakeSize);
+}
+
+function isMaxScore(score){
+  if (score === winScore){
+    return true;
+  }
+}
+
+function randomCheer(){
+  const message = document.querySelector('h2');
+  message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
+  const commentaryElement = document.querySelector('.commentary');
+  commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
+}
+
+//checks for if it is valid
+function step(){
+  snakeHead = newSnakeHead(direction, snakeHead);
+  if (hasCrashed(snakeBody, snakeHead, snakeBody2, 'Player1', 'Player2')){
     winner = 'Player2';
     randomColors(1);
   } else {
     addToSnakeBody(snakeHead, snakeBody);
     if (snakeHead !== food){
-      if (snakeBody.length > minSnakeSize){
-        snakeBody.splice(0,1);
-      }
+      loseTail(snakeBody);
     }
     if (snakeHead === food){
-      const audio = document.querySelector('audio');
-      const message = document.querySelector('h2');
-      audioChoose();
-      audio.play();
-      score = Math.max(0, snakeBody.length - minSnakeSize);
-      if (score > 49){
+      playRandomSound();
+      score = findScore(snakeBody);
+      if (isMaxScore(score)){
         winner = 'Player1';
         randomColors(1);
       }
-      message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
-      const commentaryElement = document.querySelector('.commentary');
-      commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
-      allCells[food].classList.remove('food');
-      allCells[food].innerHTML = '';
+      randomCheer();
+      removeFood();
       placeFood();
       if (score >= 5) placeBlocks();
     }
@@ -276,44 +304,33 @@ function step(){
 }
 function step2(){
   snakeHead2 = newSnakeHead(direction2, snakeHead2);
-  if (snakeBody2.includes(snakeHead2) || blocks.includes(snakeHead2) || snakeBody.includes(snakeHead2)){
-    console.log('CRASH'); //for debugging
-    if (snakeBody2.includes(snakeHead2)){
-      console.log('player2 crash into self');
-    } else if (blocks.includes(snakeHead2)){
-      console.log('player2 crash into block');
-    } else if (snakeBody.includes(snakeHead2)){
-      console.log('player2 crash into player1');
-    }
+  if (hasCrashed(snakeBody2, snakeHead2, snakeBody, 'Player2', 'Player1')){
     winner = 'Player1';
     randomColors(1);
   } else {
     addToSnakeBody(snakeHead2, snakeBody2);
     if (snakeHead2 !== food){
-      if (snakeBody2.length > minSnakeSize){
-        snakeBody2.splice(0,1);
-      }
+      loseTail(snakeBody2);
     }
     if (snakeHead2 === food){
-      const audio = document.querySelector('audio');
-      const message = document.querySelector('h2');
-      audioChoose();
-      audio.play();
-      score2 = Math.max(0, snakeBody2.length - minSnakeSize);
-      if (score2 > 49){
+      playRandomSound();
+      score2 = findScore(snakeBody2);
+      if (isMaxScore(score2)){
         winner = 'Player2';
         randomColors(1);
       }
-      message.innerHTML = `<p>Player1 score: ${score}</p><p>Player2 score: ${score2}</p><p class="commentary">${commentary[Math.floor(Math.random()*commentary.length)]}</p>`;
-      const commentaryElement = document.querySelector('.commentary');
-      commentaryElement.style.color = colors[Math.floor(Math.random() * colors.length)];
-      allCells[food].classList.remove('food');
-      allCells[food].innerHTML = '';
+      randomCheer();
+      removeFood();
       placeFood();
       if (score2 >= 5) placeBlocks();
     }
     showSnake('snakeBody2', snakeBody2);
   }
+}
+
+function removeFood(){
+  allCells[food].classList.remove('food');
+  allCells[food].innerHTML = '';
 }
 
 function placeFood(){
