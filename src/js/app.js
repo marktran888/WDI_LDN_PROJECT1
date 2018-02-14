@@ -234,7 +234,6 @@ function newSnakeHead(direction, snakeHead){
 
 //checks for if it is valid
 function step(){
-  // const allCells = document.querySelectorAll('.cell');
   snakeHead = newSnakeHead(direction, snakeHead);
   if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead) || snakeBody2.includes(snakeHead)){
     console.log('CRASH'); //for debugging
@@ -276,7 +275,6 @@ function step(){
   }
 }
 function step2(){
-  // const allCells = document.querySelectorAll('.cell');
   snakeHead2 = newSnakeHead(direction2, snakeHead2);
   if (snakeBody2.includes(snakeHead2) || blocks.includes(snakeHead2) || snakeBody.includes(snakeHead2)){
     console.log('CRASH'); //for debugging
@@ -379,6 +377,7 @@ function reset(){
     message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     score = 0;
     direction = '';
+    direction2 = '';
     snakeBody = [];
     snakeBody2 = [];
     blocks = [];
