@@ -21,8 +21,6 @@ let direction;
 let direction2;
 let timerId;
 let timerId2;
-let speed = 350; //starting speed
-let speed2 = 350; //starting speed
 const blockLevel = 30;
 
 //food
@@ -75,6 +73,7 @@ function addToSnakeBody(item, snakeBody){
   return snakeBody.push(item);
 }
 
+//clears all snakeBodyClass and reapplies
 function showSnake(snakeBodyClass, snakeBody){
   for (let i = 0; i < allCells.length; i++) {
     allCells[i].classList.remove(snakeBodyClass);
@@ -180,42 +179,34 @@ function arrowKeyFunction(e){
   }
 }
 
+function checkSpeed(score){
+  if (score < 5){
+    return 350;
+  } else if (score >= 5 && score < 10){
+    return 300;
+  } else if (score >= 10 && score < 20){
+    return 250;
+  } else if (score >= 20 && score < 30){
+    return 200;
+  } else if (score >= 30){
+    return 150;
+  }
+}
+
 function move(){
   step();
-  if (score === 0 && score < 5){
-    speed = 300;
-  } else if (score >= 5 && score < 10){
-    speed = 250;
-  } else if (score >= 10 && score < 20){
-    speed = 200;
-  } else if (score >= 20 && score < 30){
-    speed = 150;
-  } else if (score >= 30){
-    speed = 100;
-  }
   if (running === true){
     timerId = setInterval(() => {
       step();
-    }, speed);
+    }, checkSpeed(score));
   }
 }
 function move2(){
   step2();
-  if (score2 === 0 && score2 < 5){
-    speed2 = 300;
-  } else if (score2 >= 5 && score2 < 10){
-    speed2 = 250;
-  } else if (score2 >= 10 && score2 < 20){
-    speed2 = 200;
-  } else if (score2 >= 20 && score2 < 30){
-    speed2 = 150;
-  } else if (score2 >= 30){
-    speed2 = 100;
-  }
   if (running === true){
     timerId2 = setInterval(() => {
       step2();
-    }, speed2);
+    }, checkSpeed(score2));
   }
 }
 
@@ -241,7 +232,6 @@ function step(){
   }
   if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead) || snakeBody2.includes(snakeHead)){
     console.log('CRASH'); //for debugging
-    /////////////
     if (snakeBody.includes(snakeHead)){
       console.log('player1 crash into self');
     } else if (blocks.includes(snakeHead)){
@@ -249,10 +239,8 @@ function step(){
     } else if (snakeBody2.includes(snakeHead)){
       console.log('player1 crash into player2');
     }
-    /////////////
     winner = 'Player2';
     randomColors(1);
-    // gameOver();
   } else {
     addToSnakeBody(snakeHead, snakeBody);
     if (snakeHead !== food){
@@ -303,7 +291,6 @@ function step2(){
   }
   if (snakeBody2.includes(snakeHead2) || blocks.includes(snakeHead2) || snakeBody.includes(snakeHead2)){
     console.log('CRASH'); //for debugging
-    /////////////////////
     if (snakeBody2.includes(snakeHead2)){
       console.log('player2 crash into self');
     } else if (blocks.includes(snakeHead2)){
@@ -311,10 +298,8 @@ function step2(){
     } else if (snakeBody.includes(snakeHead2)){
       console.log('player2 crash into player1');
     }
-    /////////////
     winner = 'Player1';
     randomColors(1);
-    // gameOver();
   } else {
     addToSnakeBody(snakeHead2, snakeBody2);
     if (snakeHead2 !== food){
