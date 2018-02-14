@@ -355,16 +355,19 @@ function placeFood(){
 
 function placeBlocks(){
   //make sure rand isnt already taken
-  let tryBlock = Math.floor(Math.random() * width * height);
-  while (tryBlock === food || tryBlock === snakeHead || tryBlock === snakeHead2){
-    tryBlock = Math.floor(Math.random() * width * height);
+  const chanceBlock = Math.random();
+  if (chanceBlock > 0.5){
+    let tryBlock = Math.floor(Math.random() * width * height);
+    while (tryBlock === food || tryBlock === snakeHead || tryBlock === snakeHead2){
+      tryBlock = Math.floor(Math.random() * width * height);
+    }
+    blocks.push(tryBlock);
+    // for (let i = 0; i < blocks.length; i++) {
+    //   allCells[blocks[i]].classList.add('block');
+    // }
+    // allCells[tryBlock].classList.add('block');
+    allCells[tryBlock].innerHTML = '<img class="bomb-icon" src="/images/rock.png" alt="rock">';
   }
-  blocks.push(tryBlock);
-  // for (let i = 0; i < blocks.length; i++) {
-  //   allCells[blocks[i]].classList.add('block');
-  // }
-  // allCells[tryBlock].classList.add('block');
-  allCells[tryBlock].innerHTML = '<img class="bomb-icon" src="/images/rock.png" alt="rock">';
 }
 
 function randomColors(seconds){
