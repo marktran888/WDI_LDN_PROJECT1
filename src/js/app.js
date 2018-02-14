@@ -90,7 +90,7 @@ function arrowKeys(){
 //set direction and stop current movement
 function arrowKeyFunction(e){
   switch (e.keyCode) {
-    case 37:
+    case 65:
       if (direction !== 'E'){
         direction = 'W';
         console.log('left');
@@ -100,7 +100,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 38:
+    case 87:
       if (direction !== 'S'){
         direction = 'N';
         console.log('up');
@@ -110,7 +110,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 39:
+    case 68:
       if (direction !== 'W'){
         direction = 'E';
         console.log('right');
@@ -120,7 +120,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 40:
+    case 83:
       if (direction !== 'N'){
         direction = 'S';
         console.log('down');
@@ -130,7 +130,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 65:
+    case 37:
       if (direction2 !== 'E'){
         direction2 = 'W';
         console.log('left');
@@ -140,7 +140,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 87:
+    case 38:
       if (direction2 !== 'S'){
         direction2 = 'N';
         console.log('up');
@@ -150,7 +150,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 68:
+    case 39:
       if (direction2 !== 'W'){
         direction2 = 'E';
         console.log('right');
@@ -160,7 +160,7 @@ function arrowKeyFunction(e){
         }
       }
       break;
-    case 83:
+    case 40:
       if (direction2 !== 'N'){
         direction2 = 'S';
         console.log('down');
@@ -234,7 +234,7 @@ function newSnakeHead(direction, snakeHead){
   }
 }
 
-//calculates next step and checks for if it is valid
+//checks for if it is valid
 function step(){
   // const allCells = document.querySelectorAll('.cell');
   snakeHead = newSnakeHead(direction, snakeHead);
