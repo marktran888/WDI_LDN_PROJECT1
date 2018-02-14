@@ -21,7 +21,7 @@ let direction;
 let direction2;
 let timerId;
 let timerId2;
-const blockLevel = 30;
+const blockLevel = 30; //% chance a block appears
 
 //food
 let food;
@@ -87,6 +87,7 @@ function arrowKeys(){
   document.addEventListener('keydown', arrowKeyFunction);
 }
 
+//set direction and stop current movement
 function arrowKeyFunction(e){
   switch (e.keyCode) {
     case 37:
@@ -172,7 +173,12 @@ function arrowKeyFunction(e){
     default:
       console.log('invalid button');
   }
-  if (start){
+  displayZeroScore(start);
+}
+
+//remove "hit arrow key to start" message on first key press
+function displayZeroScore(s){
+  if (s){
     const message = document.querySelector('h2');
     message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     start = false;
@@ -193,6 +199,7 @@ function checkSpeed(score){
   }
 }
 
+//perpetuates movement
 function move(){
   step();
   if (running === true){
@@ -210,26 +217,27 @@ function move2(){
   }
 }
 
-function step(){
-  const allCells = document.querySelectorAll('.cell');
+function newSnakeHead(direction, snakeHead){
   switch (direction){
     case 'N':
-      snakeHead = ((snakeHead - width) + (width * height)) % (width * height);
-      break;
+      return ((snakeHead - width) + (width * height)) % (width * height);
     case 'S':
-      snakeHead = ((snakeHead + width) + (width * height)) % (width * height);
-      break;
+      return ((snakeHead + width) + (width * height)) % (width * height);
     case 'E':
-      snakeHead = (snakeHead - snakeHead % width)+(snakeHead + 1) % width;
-      break;
+      return (snakeHead - snakeHead % width)+(snakeHead + 1) % width;
     case 'W':
       if (snakeHead === 0){
-        snakeHead = width - 1;
+        return width - 1;
       } else {
-        snakeHead = (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
-        break;
+        return (snakeHead - snakeHead % width)+(snakeHead - 1) % width;
       }
   }
+}
+
+//calculates next step and checks for if it is valid
+function step(){
+  // const allCells = document.querySelectorAll('.cell');
+  snakeHead = newSnakeHead(direction, snakeHead);
   if (snakeBody.includes(snakeHead) || blocks.includes(snakeHead) || snakeBody2.includes(snakeHead)){
     console.log('CRASH'); //for debugging
     if (snakeBody.includes(snakeHead)){
@@ -270,25 +278,8 @@ function step(){
   }
 }
 function step2(){
-  const allCells = document.querySelectorAll('.cell');
-  switch (direction2){
-    case 'N':
-      snakeHead2 = ((snakeHead2 - width) + (width * height)) % (width * height);
-      break;
-    case 'S':
-      snakeHead2 = ((snakeHead2 + width) + (width * height)) % (width * height);
-      break;
-    case 'E':
-      snakeHead2 = (snakeHead2 - snakeHead2 % width)+(snakeHead2 + 1) % width;
-      break;
-    case 'W':
-      if (snakeHead2 === 0){
-        snakeHead2 = width - 1;
-      } else {
-        snakeHead2 = (snakeHead2 - snakeHead2 % width)+(snakeHead2 - 1) % width;
-        break;
-      }
-  }
+  // const allCells = document.querySelectorAll('.cell');
+  snakeHead2 = newSnakeHead(direction2, snakeHead2);
   if (snakeBody2.includes(snakeHead2) || blocks.includes(snakeHead2) || snakeBody.includes(snakeHead2)){
     console.log('CRASH'); //for debugging
     if (snakeBody2.includes(snakeHead2)){
@@ -389,6 +380,7 @@ function reset(){
     const message = document.querySelector('h2');
     message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     score = 0;
+    direction = '';
     snakeBody = [];
     snakeBody2 = [];
     blocks = [];
