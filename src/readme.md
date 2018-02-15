@@ -1,12 +1,53 @@
+
+# GA WDI-32 Project 1 - Battle snakes
+
+https://immense-beach-47348.herokuapp.com/
+
+## Setup instructions
+
+- Clone or download the repo
+- Install dependencies with `yarn install`
+- Launch the app with `gulp`
+
+>**NB**: You will need to have installed `gulp-cli` globally
+
+
+### Technical Requirements
+
+* **Render a game in the browser**
+* **Design logic for winning** & **visually display which player won**
+* **Include separate HTML / CSS / JavaScript files**
+* Stick with **KISS (Keep It Simple Stupid)** and **DRY (Don't Repeat Yourself)** principles
+* Use **Javascript or jQuery** for **DOM manipulation**
+* **Deploy your game online**, where the rest of the world can access it
+* Use **semantic markup** for HTML and CSS (adhere to best practices)
+
+---
+For our first project we were asked to create a game using HTML, CSS and JavaScript which uses techniques and code that we learned over the first few weeks of the WDI course.
+
+My initial idea was to build a snakes game.
+MVP - snakes game. A snake that moves around a grid and increases size by "eating" fruit.
+Additional features if time allowed that I managed:
+  - 2 players
+  - rocks appear at random intervals
+  - snake gets faster
+  - fruit is animated
+  - munch sound plays when eating fruit
+
+Possible other features that I did not implement:
+  - rocks reveal an image. Players could guess for additional points/speed
+
+---
 Battle snakes is a 2 player game.
 
-Player 1 is red and uses keys: up(W) left(A) down(S) right(D).
-Player 2 is blue and uses the arrow keys.
+Win condition: A player can win by being the first to reach 50 points by eating the fruit or when the other player crashes.
 
-A player wins points by eating the fruit that randomly appears.
-
-A player can win by being the first to reach 50 points or when the other player crashes.
-
-Tip - a player can speed up by changing directions for example hitting right and up alternatively and repeatedly is faster than waiting for the snake to move by himself.
-
-The snake gets faster and rocks will appear at random as the players accumulate points.
+Technical challenges:
+  - creating a grid. My initial thoughts were to create an array of arrays but a single array of cells is easier to manage. I used a function which creates divs in a row and then created a number of rows depending on the grid size.
+  - snake. The next challenge was to create a snake. I used an array to hold the snake cells.
+  - snake movement. I used event listeners on keydown and had to figure out formula for the next cell that should join the snake array and then removed the first element from the snake array to maintain it's size. One of the bigger challenges was to work out how the snake should move through walls.
+  - perpetuate movement. I used timeInterval to run steps at regular time intervals.
+  - eating fruit. Score is incremented and the splicing of snake array is skipped to allow him to grow.
+  - detecting crashes. The player loses when he hits a cell already occupied by a snake or a rock.
+  - speed. The snake speeds up as his score increases.
+  - adding a second player. 

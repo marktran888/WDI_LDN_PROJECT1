@@ -1,9 +1,9 @@
 //DOM selectors
 let gridElement;
 let gameContainer;
-let audio;
 let allCells;
 let instructionsE;
+let audio;
 
 //grid size
 const height = 25;
@@ -41,10 +41,6 @@ let start = true; // for welcome message
 let running = true;
 let blocks = [];
 let instructions = false;
-
-function audioChoose (){
-  return audio.setAttribute('src','/sounds/eat.mp3');
-}
 
 //Build grid
 function buildGrid(h,w){
@@ -256,8 +252,6 @@ function hasCrashed(snakeBody, snakeHead, snakeBody2, player, otherPlayer){
 }
 
 function playRandomSound(){
-  const audio = document.querySelector('audio');
-  audioChoose();
   audio.play();
 }
 
