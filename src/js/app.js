@@ -3,6 +3,7 @@ let gridElement;
 let gameContainer;
 let audio;
 let allCells;
+let instructionsE;
 
 //grid size
 const height = 25;
@@ -42,6 +43,7 @@ let winner;
 let start = true; // for welcome message
 let running = true;
 let blocks = [];
+let instructions = false;
 
 function audioChoose (){
   return audio.setAttribute('src',`/sounds/${audioFiles[Math.floor(Math.random()*audioFiles.length)]}.wav`);
@@ -96,6 +98,9 @@ function arrowKeys(){
 //set direction and stop current movement
 function arrowKeyFunction(e){
   switch (e.keyCode) {
+    case 32:
+      viewInstructions();
+      break;
     case 65:
       if (direction !== 'E' && direction !== 'W'){
         direction = 'W';
@@ -370,6 +375,18 @@ function randomColors(seconds){
   }, 100);
 }
 
+function viewInstructions(){
+  if (instructions){
+    gameContainer.style.display = 'block';
+    instructionsE.style.display = 'none';
+    instructions = false;
+  } else {
+    gameContainer.style.display = 'none';
+    instructionsE.style.display = 'block';
+    instructions = true;
+  }
+}
+
 function gameOver(){
   clearInterval(timerId);
   clearInterval(timerId2);
@@ -421,6 +438,7 @@ function init() {
   gridElement = document.querySelector('.grid');
   gameContainer = document.querySelector('.game-container');
   audio = document.querySelector('audio');
+  instructionsE = document.querySelector('.instructions');
   startGame();
 }
 
