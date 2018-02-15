@@ -251,7 +251,7 @@ function hasCrashed(snakeBody, snakeHead, snakeBody2, player, otherPlayer){
   return false;
 }
 
-function playRandomSound(){
+function playEatSound(){
   audio.play();
 }
 
@@ -284,7 +284,7 @@ function step(){
       loseTail(snakeBody);
     }
     if (snakeHead === food){
-      playRandomSound();
+      playEatSound();
       score = findScore(snakeBody);
       if (isMaxScore(score)){
         winner = 'Player1';
@@ -309,7 +309,7 @@ function step2(){
       loseTail(snakeBody2);
     }
     if (snakeHead2 === food){
-      playRandomSound();
+      playEatSound();
       score2 = findScore(snakeBody2);
       if (isMaxScore(score2)){
         winner = 'Player2';
