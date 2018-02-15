@@ -345,7 +345,7 @@ function placeBlocks(){
   if (chanceBlock < blockLevel/100){
     let tryBlock = Math.floor(Math.random() * width * height);
     const avoid = [food, snakeHead, snakeHead2, snakeHead-1, snakeHead+1, snakeHead+width, snakeHead-width, snakeHead2-1, snakeHead2+1, snakeHead2+width, snakeHead2-width];
-    while (avoid.contains(tryBlock)){
+    while (avoid.includes(tryBlock)){
       tryBlock = Math.floor(Math.random() * width * height);
     }
     blocks.push(tryBlock);
