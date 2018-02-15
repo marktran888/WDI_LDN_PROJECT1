@@ -402,6 +402,7 @@ function reset(){
     const message = document.querySelector('h2');
     message.innerHTML = '<p>Player1 score: 0</p><p>Player2 score: 0</p>';
     score = 0;
+    score2 = 0;
     direction = '';
     direction2 = '';
     snakeBody = [];
