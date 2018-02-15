@@ -29,9 +29,6 @@ const winScore = 50;
 let food;
 const foodIcons = ['banana', 'cherry', 'grapes', 'orange', 'pear'];
 
-// sounds
-const audioFiles = ['after', 'faster', 'makes_us', 'over', 'better', 'harder', 'more_than', 'stronger', 'do_it', 'hour', 'never', 'work_is', 'ever', 'make_it', 'our', 'work_it'];
-
 //commentary
 const commentary = ['not bad!', 'faster!', 'lets go!', 'come on!', 'that\'s better', 'go hard or go home', 'go go go!', 'ya mon!', 'do it!', 'yeah!', 'nice work!', 'good!', 'excellent', 'OK!', 'you can do better!', 'winter is coming!'];
 const colors = ['blue', 'dodgerblue', 'aqua', 'lavender', 'lightcyan', 'lime', 'green', 'red', 'magenta'];
@@ -46,7 +43,7 @@ let blocks = [];
 let instructions = false;
 
 function audioChoose (){
-  return audio.setAttribute('src',`/sounds/${audioFiles[Math.floor(Math.random()*audioFiles.length)]}.wav`);
+  return audio.setAttribute('src','/sounds/eat.mp3');
 }
 
 //Build grid
