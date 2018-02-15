@@ -28,7 +28,7 @@ For our first project we were asked to create a game using HTML, CSS and JavaScr
 My initial idea was to build a snakes game.
 MVP - snakes game. A snake that moves around a grid and increases size by "eating" fruit.
 Additional features if time allowed that I managed:
-  - 2 players
+  - 2 players simultaneously
   - rocks appear at random intervals
   - snake gets faster
   - fruit is animated
@@ -50,4 +50,5 @@ Technical challenges:
   - eating fruit. Score is incremented and the splicing of snake array is skipped to allow him to grow.
   - detecting crashes. The player loses when he hits a cell already occupied by a snake or a rock.
   - speed. The snake speeds up as his score increases.
-  - adding a second player. 
+  - adding a second player.
+  - holding key. Holding the key allowed multiple keydown and made the snake run quickly. This was a nice feature but both players could not go fast at the same time. To make it fair I disabled this. I also disabled the key to run send the snake in the opposite direction as it was too easy to crash and lose.
