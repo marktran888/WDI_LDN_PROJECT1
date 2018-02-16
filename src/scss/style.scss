@@ -114,3 +114,12 @@ footer {
     90% { transform: translate(2px, 3px) rotate(0deg); }
     100% { transform: translate(2px, -3px) rotate(-1deg); }
 }
+
+@keyframes rotate-clockwise {
+  from {
+     transform: rotate(0deg);
+   }
+   to {
+     transform: rotate(360deg);
+   }
+}

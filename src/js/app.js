@@ -411,6 +411,9 @@ function reset(){
     running = true;
     startGame();
   });
+  snakeIconElement.addEventListener('mouseover', () => {
+    snakeIconElement.style.animation='rotate-clockwise 2s linear';
+  });
 }
 
 function startGame(){
