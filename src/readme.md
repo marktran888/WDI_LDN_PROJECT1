@@ -42,13 +42,13 @@ Battle snakes is a 2 player game.
 
 Win condition: A player can win by being the first to reach 50 points by eating the fruit or when the other player crashes.
 
-Technical challenges:
-  - creating a grid. My initial thoughts were to create an array of arrays but a single array of cells is easier to manage. I used a function which creates divs in a row and then created a number of rows depending on the grid size.
-  - snake. The next challenge was to create a snake. I used an array to hold the snake cells.
-  - snake movement. I used event listeners on keydown and had to figure out formula for the next cell that should join the snake array and then removed the first element from the snake array to maintain it's size. One of the bigger challenges was to work out how the snake should move through walls.
-  - perpetuate movement. I used timeInterval to run steps at regular time intervals.
-  - eating fruit. Score is incremented and the splicing of snake array is skipped to allow him to grow.
-  - detecting crashes. The player loses when he hits a cell already occupied by a snake or a rock.
-  - speed. The snake speeds up as his score increases.
+### Technical challenges:
+  - creating a grid - My initial thoughts were to create an array of arrays but a single array of cells is easier to manage. I used a function which creates divs in a row and then created a number of rows depending on the grid size.
+  - snake - The next challenge was to create a snake. I used an array to hold the snake cells.
+  - snake movement - I used event listeners on keydown and had to figure out formula for the next cell that should join the snake array and then removed the first element from the snake array to maintain it's size. One of the bigger challenges was to work out how the snake should move through walls.
+  - perpetuate movement - I used timeInterval to run steps at regular time intervals.
+  - eating fruit - Score is incremented and the splicing of snake array is skipped to allow him to grow.
+  - detecting crashes - The player loses when he hits a cell already occupied by a snake or a rock.
+  - speed - The snake speeds up as his score increases.
   - adding a second player.
-  - holding key. Holding the key allowed multiple keydown and made the snake run quickly. This was a nice feature but both players could not go fast at the same time. To make it fair I disabled this. I also disabled the key to run send the snake in the opposite direction as it was too easy to crash and lose.
+  - holding key - Holding the key allowed multiple keydown and made the snake run quickly. This was a nice feature but both players could not go fast at the same time. To make it fair I disabled this. I also disabled the key to run send the snake in the opposite direction as it was too easy to crash and lose.
