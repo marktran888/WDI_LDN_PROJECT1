@@ -98,7 +98,7 @@ function arrowKeyFunction(e){
       if (direction !== 'E' && direction !== 'W'){
         direction = 'W';
         console.log('left');
-        if (running === true){
+        if (running){
           clearInterval(timerId);
           move(direction);
         }
@@ -368,15 +368,20 @@ function randomColors(seconds){
 }
 
 function viewInstructions(){
-  if (instructions){
-    gameContainer.style.display = 'block';
-    instructionsE.style.display = 'none';
-    instructions = false;
-  } else {
-    gameContainer.style.display = 'none';
-    instructionsE.style.display = 'block';
-    instructions = true;
-  }
+
+  gameContainer.style.display = instructions ? 'block' : 'none';
+  instructionsE.style.display = instructions ? 'none' : 'block';
+  instructions = !instructions;
+
+  // if (instructions){
+  //   gameContainer.style.display = 'block';
+  //   instructionsE.style.display = 'none';
+  //   instructions = false;
+  // } else {
+  //   gameContainer.style.display = 'none';
+  //   instructionsE.style.display = 'block';
+  //   instructions = true;
+  // }
 }
 
 function gameOver(){
