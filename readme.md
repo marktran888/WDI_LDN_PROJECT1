@@ -7,7 +7,7 @@ https://immense-beach-47348.herokuapp.com/
 
 - Clone or download the repo
 - Install dependencies with `yarn install`
-- Launch the app with `gulp`
+- Launch the app with `gulp` and browse to localhost:3000
 
 >**NB**: You will need to have installed `gulp-cli` globally
 
@@ -34,6 +34,12 @@ Additional features if time allowed that I managed:
   - fruit is animated
   - munch sound plays when eating fruit
   - cheers in random colours
+
+  <a href="https://imgur.com/j7Uam14"><img src="https://i.imgur.com/j7Uam14.png" title="source: imgur.com" /></a>
+
+  <a href="https://imgur.com/okGYmCq"><img src="https://i.imgur.com/okGYmCq.png" title="source: imgur.com" /></a>
+
+  <a href="https://imgur.com/S1gh1Mk"><img src="https://i.imgur.com/S1gh1Mk.png" title="source: imgur.com" /></a>
 
 Possible other features that I did not implement:
   - rocks reveal an image. Players could guess for additional points/speed
