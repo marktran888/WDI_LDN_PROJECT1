@@ -3,6 +3,32 @@
 
 https://immense-beach-47348.herokuapp.com/
 
+## Overview
+
+For our first project we were asked to create a game using HTML, CSS and JavaScript which uses techniques and code that we learned over the first few weeks of the WDI course.
+
+My initial idea for an MVP was to build a simple snakes game where a snake that moves around a grid and increases size by "eating" fruit. I extended this out to a 2 player game where 2 player can play simultaneously on the same keyboard and screen.
+
+Win condition: A player can win by being the first to reach 50 points by eating the fruit or when the other player crashes.
+
+Additional features:
+  - rocks/obstacles appear at random intervals
+  - snake gets faster
+  - fruit is animated
+  - munch sound plays when eating fruit
+  - cheers in random colours
+
+  <a href="https://imgur.com/j7Uam14"><img src="https://i.imgur.com/j7Uam14.png" title="source: imgur.com" /></a>
+
+  <a href="https://imgur.com/okGYmCq"><img src="https://i.imgur.com/okGYmCq.png" title="source: imgur.com" /></a>
+
+  <a href="https://imgur.com/S1gh1Mk"><img src="https://i.imgur.com/S1gh1Mk.png" title="source: imgur.com" /></a>
+
+Possible other features that could be implement in the future:
+  - rocks reveal an image. Players could guess for additional points/speed
+
+---
+
 ## Setup instructions
 
 - Clone or download the repo
@@ -23,31 +49,6 @@ https://immense-beach-47348.herokuapp.com/
 * Use **semantic markup** for HTML and CSS (adhere to best practices)
 
 ---
-For our first project we were asked to create a game using HTML, CSS and JavaScript which uses techniques and code that we learned over the first few weeks of the WDI course.
-
-My initial idea was to build a snakes game.
-MVP - snakes game. A snake that moves around a grid and increases size by "eating" fruit.
-Additional features if time allowed that I managed:
-  - 2 players simultaneously
-  - rocks appear at random intervals
-  - snake gets faster
-  - fruit is animated
-  - munch sound plays when eating fruit
-  - cheers in random colours
-
-  <a href="https://imgur.com/j7Uam14"><img src="https://i.imgur.com/j7Uam14.png" title="source: imgur.com" /></a>
-
-  <a href="https://imgur.com/okGYmCq"><img src="https://i.imgur.com/okGYmCq.png" title="source: imgur.com" /></a>
-
-  <a href="https://imgur.com/S1gh1Mk"><img src="https://i.imgur.com/S1gh1Mk.png" title="source: imgur.com" /></a>
-
-Possible other features that I did not implement:
-  - rocks reveal an image. Players could guess for additional points/speed
-
----
-Battle snakes is a 2 player game.
-
-Win condition: A player can win by being the first to reach 50 points by eating the fruit or when the other player crashes.
 
 ### Technical challenges:
   - creating a grid - My initial thoughts were to create an array of arrays but a single array of cells is easier to manage. I used a function which creates divs in a row and then created a number of rows depending on the grid size.
